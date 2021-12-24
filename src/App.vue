@@ -2,11 +2,15 @@
   <div id="app">
   <!-- 在router中，我们定义了访问的路径，显示的内容，在这里我们定义显示的位置 -->
       <router-view/>
-      <hr>
   </div>
 </template>
 
 <style lang="scss">
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

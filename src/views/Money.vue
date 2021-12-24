@@ -1,5 +1,8 @@
 <template>
-  <div>Money.vue
+  <div class="nav-wrapper">
+    <div class="content">
+      <p>money.vue</p>
+    </div>
     <Nav></Nav>
   </div>
 </template>
@@ -11,5 +14,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .nav-wrapper{
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    /*高度是满屏*/
+    height: 100vh;
+  }
 
+  .content{
+    /*查出部分，只有内容区域会滚动*/
+    overflow: auto;
+    flex-grow: 1;
+  }
 </style>
