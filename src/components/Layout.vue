@@ -15,7 +15,6 @@ export default {
 
 <style scoped lang="scss">
 .nav-wrapper {
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   /*高度是满屏*/
