@@ -12,7 +12,7 @@ import Icon from '@/components/Icon.vue';
 Vue.config.productionTip = false;
 Vue.component('Nav', Nav);
 Vue.component('Layout',Layout);
-Vue.component('Icon',Icon)
+Vue.component('Icon',Icon);
 
 new Vue({
   //初始化组件，引入router

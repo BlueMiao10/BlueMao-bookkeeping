@@ -4,11 +4,21 @@ import Money from '@/views/Money.vue';
 import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
 import NotFound from '@/views/NotFound.vue';
+// import FrontPage from '@/views/FrontPage.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  //默认路径进入'/money'
+  //默认路径进入'/FrontPage'
+  // {
+  //   path: '/',
+  //   redirect: '/frontpage'
+  // },
+  // //首页
+  // {
+  //   path:'/frontpage',
+  //   component:FrontPage
+  // },
   {
     path: '/',
     redirect: '/money'
