@@ -58,10 +58,12 @@ export default {
 <style scoped lang="scss">
 .tags {
   flex-grow: 1;
+
   .current {
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
+
     li {
       display: flex;
       width: 20%;
