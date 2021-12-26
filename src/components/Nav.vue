@@ -37,10 +37,10 @@ nav {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 3px 0;
+    padding: 5px 0;
     .icon{
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
     }
   }
   .item.selected{

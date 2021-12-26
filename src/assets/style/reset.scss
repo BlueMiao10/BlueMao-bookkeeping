@@ -7,3 +7,11 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
+ul,ol{
+  list-style: none;
+}
+/*字体默认不会继承父元素*/
+button,input{
+  font:inherit;
+}
