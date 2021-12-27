@@ -18,9 +18,13 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'NumberPad'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class NumberPad extends Vue{
+  output='';
+}
 </script>
 
 <style scoped lang="scss">
