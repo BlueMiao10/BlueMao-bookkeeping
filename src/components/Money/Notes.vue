@@ -1,8 +1,8 @@
 <template>
   <div class="notes">
     <Icon name="note"/>
-    <input type="text" placeholder="备注">
-    <div class="time">2021.11.15</div>
+    <input type="text" placeholder="写点备注~">
+    <div class="time">2021.11.15<br>今天</div>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
 
   .time {
     padding-right: 16px;
+    text-align: center;
   }
 }
 </style>
