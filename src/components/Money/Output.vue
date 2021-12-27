@@ -1,12 +1,26 @@
 <template>
   <div class="output">
-    100
+    {{ display }}
   </div>
 </template>
 
 <script lang="ts">
+import EventBus from '@/eventBus.ts';
+
 export default {
-  name: 'Output'
+  name: 'Output',
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  data() {
+    return {
+      display: '0'
+    };
+  },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  created() {
+    EventBus.$on('output', data => {
+      this.display = data;
+    });
+  }
 };
 </script>
 

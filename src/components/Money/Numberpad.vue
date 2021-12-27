@@ -1,34 +1,75 @@
 <template>
   <div class="numberPad clearfix">
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>删除</button>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>清空</button>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    <button class="ok">OK</button>
-    <button class="zero">0</button>
-    <button>.</button>
+    <button @click="inputContent">1</button>
+    <button @click="inputContent">2</button>
+    <button @click="inputContent">3</button>
+    <button @click="remove">删除</button>
+    <button @click="inputContent">4</button>
+    <button @click="inputContent">5</button>
+    <button @click="inputContent">6</button>
+    <button @click="clear">清空</button>
+    <button @click="inputContent">7</button>
+    <button @click="inputContent">8</button>
+    <button @click="inputContent">9</button>
+    <button @click="ok" class="ok">OK</button>
+    <button @click="inputContent" class="zero">0</button>
+    <button @click="inputContent">.</button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import EventBus from '@/eventBus.ts';
 
 @Component
-export default class NumberPad extends Vue{
-  output='';
+export default class NumberPad extends Vue {
+  output = '0';
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  inputContent(event: MouseEvent) {
+    const button = event.target;
+    const input = button.textContent;
+    if (this.output.length === 16) {
+      EventBus.$emit('output', this.output);
+      return;
+    }
+    if (this.output === '0') {
+      if ('0123456789'.indexOf(input) >= 0) {
+        this.output = input;
+      } else {
+        this.output += input;
+      }
+      EventBus.$emit('output', this.output);
+      return;
+    }
+    if (this.output.indexOf('.') >= 0 && input === '.') {return;}
+    this.output += input;
+    EventBus.$emit('output', this.output);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  remove() {
+    if (this.output.length === 1) {
+      this.output = '0';
+    } else {
+      this.output = this.output.slice(0, -1);
+    }
+    EventBus.$emit('output', this.output);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  clear() {
+    this.output = '0';
+    EventBus.$emit('output', this.output);
+  }
+
 }
 </script>
 
 <style scoped lang="scss">
 @import "~@/assets/style/helper.scss";
+
 .numberPad {
   @extend %clearfix;
 

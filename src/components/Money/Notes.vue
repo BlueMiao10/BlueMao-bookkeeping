@@ -1,7 +1,7 @@
 <template>
   <div class="notes">
     <Icon name="note"/>
-    <input type="text" placeholder="写点备注~" :value="value" @input="onInput">
+    <input type="text" placeholder="写点备注~"  v-model="value">
     <div class="time">2021.11.15<br>今天</div>
   </div>
 </template>
@@ -13,12 +13,6 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class Notes extends Vue {
   value = '';
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  onInput(event: KeyboardEvent) {
-    const input = event.target as HTMLInputElement;
-    this.value = input.value;
-  }
 }
 </script>
 
