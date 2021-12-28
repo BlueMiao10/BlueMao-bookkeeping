@@ -28,6 +28,8 @@ export default class Tag1 extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
+    console.log(this.selectedTags)
+    //this.$emit('update:value',this.selectedTags)
   }
 
   create() {

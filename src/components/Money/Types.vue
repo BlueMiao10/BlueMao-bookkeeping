@@ -1,20 +1,20 @@
 <template>
   <div>
     <ul class="types">
-      <li :class=" type === '+' && 'selected' " @click="selectType('+')">收入</li>
-      <li :class=" type === '-' && 'selected' " @click="selectType('-')">支出</li>
+      <li :class=" value === '+' && 'selected' " @click="selectType('+')">收入</li>
+      <li :class=" value === '-' && 'selected' " @click="selectType('-')">支出</li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 
 @Component
 export default class Types extends Vue {
-  type = '-'; //'-'代表支出，'+'代表收入
+  @Prop() readonly value!: string;
 
   //@Prop 告诉 Vue PropA 不是data 是  Prop
   //Number 告诉 Vue PropA 是个 Number   运行时  JS在浏览器或者Node环境运行的过程中
@@ -23,12 +23,12 @@ export default class Types extends Vue {
   // @Prop(Number) PropA:number|undefined;
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  selectType(type: string) {  //type只能是 +/- 中的一个，如果不是其中的一个，就会抛出错误
-    if (type !== '-' && type !== '+') {
+  selectType(value: string) {  //type只能是 +/- 中的一个，如果不是其中的一个，就会抛出错误
+    if (value !== '-' && value !== '+') {
       throw new Error('type is unknown');
     }
-    this.type = type;
-    EventBus.$emit('type', this.type);
+    this.$emit('update:value',value);
+    EventBus.$emit('value', value);
   }
 }
 

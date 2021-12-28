@@ -23,7 +23,6 @@ export default class Tag2 extends Vue {
   name: string[] = ['一般', '投资', '工资', '红包', '报销', '奖金'];
 
   toggle(tag: string) {
-    if (this.selectedTags.length > 0) {return;}
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
@@ -58,6 +57,13 @@ export default class Tag2 extends Vue {
     flex-direction: column;
     font-size: 13px;
     padding: 10px 0;
+
+    &.selected {
+      .icon {
+        border-radius: 50%;
+        border: 1px solid red;
+      }
+    }
 
     .icon {
       width: 40px;

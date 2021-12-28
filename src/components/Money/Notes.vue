@@ -1,18 +1,23 @@
 <template>
   <div class="notes">
     <Icon name="note"/>
-    <input type="text" placeholder="写点备注~"  v-model="value">
+    <input type="text" placeholder="写点备注~" v-model="value">
     <div class="time">2021.11.15<br>今天</div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Notes extends Vue {
   value = '';
+
+  @Watch('value')
+  onValueChanged(value: string) {
+    this.$emit('update:value', value);
+  }
 }
 </script>
 

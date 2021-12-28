@@ -11,7 +11,7 @@
     <button @click="inputContent">7</button>
     <button @click="inputContent">8</button>
     <button @click="inputContent">9</button>
-    <button class="ok">OK</button>
+    <button @click="ok" class="ok">OK</button>
     <button @click="inputContent" class="zero">0</button>
     <button @click="inputContent">.</button>
   </div>
@@ -25,7 +25,6 @@ import EventBus from '@/eventBus.ts';
 @Component
 export default class NumberPad extends Vue {
   output = '0';
-
 
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement;
@@ -62,6 +61,10 @@ export default class NumberPad extends Vue {
   clear() {
     this.output = '0';
     EventBus.$emit('output', this.output);
+  }
+
+  ok() {
+    this.$emit('update:value', this.output);
   }
 
 }
