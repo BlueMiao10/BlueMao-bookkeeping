@@ -1,21 +1,23 @@
 <template>
-  <div class="output">
-    {{ display }}
+  <div class="outputNumber">
+    <div class="output">
+      {{ display }}
+    </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import EventBus from '@/eventBus.ts';
 
 export default {
   name: 'Output',
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   data() {
     return {
-      display: '0'
+      display: '0',
+      xxx: ''
     };
   },
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   created() {
     EventBus.$on('output', data => {
       this.display = data;
@@ -25,12 +27,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .output {
+  flex-grow: 1;
   font-size: 30px;
-  background-color: #B2D5F5;
   font-family: Consolas, monospace;
   text-align: right;
   padding: 2px 16px;
-  //box-shadow:inset 0 0 3px fade-out(#B2D5F5,0.5);
+  background-color: #B2D5F5;
+}
+
+.viewSelected {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+  margin-left: 10px;
+
+  > ::v-deep .icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+  }
 }
 </style>

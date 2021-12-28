@@ -1,81 +1,70 @@
 <template>
-  <div class="tags">
-    <ul class="current">
-      <li>
-        <Icon name="rent"/>
-        房租
-      </li>
-      <li>
-        <Icon name="cloth"/>
-        穿衣
-      </li>
-      <li>
-        <Icon name="transport"/>
-        出行
-      </li>
-      <li>
-        <Icon name="alcohol"/>
-        酒水
-      </li>
-      <li>
-        <Icon name="travel"/>
-        旅游
-      </li>
-      <li>
-        <Icon name="friend"/>
-        人情
-      </li>
-      <li>
-        <Icon name="snack"/>
-        零食
-      </li>
-      <li>
-        <Icon name="study"/>
-        学习
-      </li>
-      <li>
-        <Icon name="eat"/>
-        吃饭
-      </li>
-      <li>
-        <Icon name="recreation"/>
-        娱乐
-      </li>
-      <li class="new">
-        <Icon name="add"/>
-        编辑
-      </li>
-    </ul>
-  </div>
+  <ul class="current">
+    <li v-for="tag in name" :key="tag" @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}">
+      <Icon :name="svg[name.indexOf(tag)]"/>
+      {{ tag }}
+    </li>
+    <li class="new" @click="create">
+      <Icon name="add"/>
+      编辑
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'Tag1'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class Tag1 extends Vue {
+  selectedTags: string[] = [];
+  svg: string[] = ['recreation', 'rent', 'cloth', 'transport', 'alcohol', 'travel', 'friend', 'snack', 'study', 'eat'];
+  name: string[] = ['一般', '房租', '穿衣', '出行', '酒水', '旅游', '人情', '零食', '学习', '吃饭'];
+
+  toggle(tag: string) {
+    const index = this.selectedTags.indexOf(tag);
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+    } else {
+      this.selectedTags.push(tag);
+    }
+  }
+
+  create() {
+    const tag = window.prompt('请输入标签名');
+    if (tag === '') {
+      window.alert('标签名不能为空');
+    } else {
+      this.name.push(tag as string);
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
-.tags {
-  flex-grow: 1;
+.current {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
 
-  .current {
+  li {
     display: flex;
-    flex-wrap: wrap;
-    overflow: auto;
+    width: 20%;
+    align-items: center;
+    flex-direction: column;
+    font-size: 13px;
+    padding: 10px 0;
 
-    li {
-      display: flex;
-      width: 20%;
-      align-items: center;
-      flex-direction: column;
-      font-size: 13px;
-      padding: 10px 0;
-
+    &.selected {
       .icon {
-        width: 30px;
-        height: 30px;
+        border-radius: 50%;
+        border: 1px solid red;
       }
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
     }
   }
 }

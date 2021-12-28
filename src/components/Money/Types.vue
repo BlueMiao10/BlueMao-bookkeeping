@@ -10,6 +10,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import EventBus from '@/eventBus';
 
 @Component
 export default class Types extends Vue {
@@ -27,6 +28,7 @@ export default class Types extends Vue {
       throw new Error('type is unknown');
     }
     this.type = type;
+    EventBus.$emit('type', this.type);
   }
 }
 

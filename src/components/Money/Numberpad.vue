@@ -11,7 +11,7 @@
     <button @click="inputContent">7</button>
     <button @click="inputContent">8</button>
     <button @click="inputContent">9</button>
-    <button @click="ok" class="ok">OK</button>
+    <button class="ok">OK</button>
     <button @click="inputContent" class="zero">0</button>
     <button @click="inputContent">.</button>
   </div>
@@ -26,11 +26,11 @@ import EventBus from '@/eventBus.ts';
 export default class NumberPad extends Vue {
   output = '0';
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   inputContent(event: MouseEvent) {
-    const button = event.target;
-    const input = button.textContent;
-    if (this.output.length === 16) {
+    const button = event.target as HTMLButtonElement;
+    const input = button.textContent as string;
+    if (this.output.length === 9) {
       EventBus.$emit('output', this.output);
       return;
     }
@@ -48,7 +48,7 @@ export default class NumberPad extends Vue {
     EventBus.$emit('output', this.output);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   remove() {
     if (this.output.length === 1) {
       this.output = '0';
@@ -58,7 +58,7 @@ export default class NumberPad extends Vue {
     EventBus.$emit('output', this.output);
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   clear() {
     this.output = '0';
     EventBus.$emit('output', this.output);
@@ -80,6 +80,7 @@ export default class NumberPad extends Vue {
     height: 54px;
     outline: none;
     border: none;
+    transition: all .2s;
 
     &.ok {
       height: 54*2px;
@@ -88,6 +89,10 @@ export default class NumberPad extends Vue {
 
     &.zero {
       width: 50%;
+    }
+
+    &:active {
+      background-color: #c4c4c4;
     }
   }
 }
