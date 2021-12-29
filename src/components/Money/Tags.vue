@@ -1,19 +1,19 @@
 <template>
   <div class="tags">
     <Output/>
-    <ul class="current" v-if="type === '+'">
-      <li v-for="tag in name" :key="tag" @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}">
-        <Icon :name="svg[name.indexOf(tag)]"/>
+    <ul class="current" v-if="type === '-' ">
+      <li v-for="tag in name2" :key="tag" @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}">
+        <Icon :name="svg2[name2.indexOf(tag)]"/>
         {{ tag }}
       </li>
-      <li class="new" @click="create">
+      <li class="new" @click="create2">
         <Icon name="add"/>
         编辑
       </li>
     </ul>
     <ul class="current" v-else>
-      <li v-for="tag in name2" :key="tag" @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}">
-        <Icon :name="svg2[name2.indexOf(tag)]"/>
+      <li v-for="tag in name" :key="tag" @click="toggle(tag)" :class="{selected:selectedTags.indexOf(tag)>=0}">
+        <Icon :name="svg[name.indexOf(tag)]"/>
         {{ tag }}
       </li>
       <li class="new" @click="create">
@@ -35,7 +35,7 @@ import Output from '@/components/Money/Output.vue';
 })
 
 export default class Tags extends Vue {
-  type = '';
+  type = '-';
   selectedTags: string[] = [];
   svg2: string[] = ['recreation', 'rent', 'cloth', 'transport', 'alcohol', 'travel', 'friend', 'snack', 'study', 'eat'];
   name2: string[] = ['一般', '房租', '穿衣', '出行', '酒水', '旅游', '人情', '零食', '学习', '吃饭'];
@@ -58,6 +58,15 @@ export default class Tags extends Vue {
       window.alert('标签名不能为空');
     } else {
       this.name.push(tag as string);
+    }
+  }
+
+  create2() {
+    const tag = window.prompt('请输入标签名');
+    if (tag === '') {
+      window.alert('标签名不能为空');
+    } else {
+      this.name2.push(tag as string);
     }
   }
 
