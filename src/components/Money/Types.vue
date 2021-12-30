@@ -27,28 +27,10 @@ export default class Types extends Vue {
     if (value !== '-' && value !== '+') {
       throw new Error('type is unknown');
     }
-    this.$emit('update:value',value);
+    this.$emit('update:value', value);
     EventBus.$emit('value', value);
   }
 }
-
-//js 实现
-// export default {
-//   name: 'Types',
-//   data() {
-//     return {
-//       type: '-' //'-'代表支出，'+'代表收入
-//     };
-//   },
-//   methods: {
-//     selectType(type) {  //type只能是 +/- 中的一个，如果不是其中的一个，就会抛出错误
-//       if (type !== '-' && type !== '+') {
-//         throw new Error('type is unknown');
-//       }
-//       this.type = type;
-//     }
-//   }
-// };
 </script>
 
 <style scoped lang="scss">
@@ -57,13 +39,19 @@ export default class Types extends Vue {
 .types {
   display: flex;
   font-size: 16px;
-  justify-content: center;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  background-color: #fff;
 
   li {
-    margin: 5px 16px;
+    padding: 3px 20px;
+    border-radius: 5px;
+    border: 1px solid #efefef;
+    margin: 0 3px;
 
     &.selected {
-      color: $color-highlight;
+      //border: 1px solid #000;
+      background-color: #B2D5F5;
     }
   }
 }

@@ -47,7 +47,6 @@ export default class NumberPad extends Vue {
     EventBus.$emit('output', this.output);
   }
 
-
   remove() {
     if (this.output.length === 1) {
       this.output = '0';
@@ -56,7 +55,6 @@ export default class NumberPad extends Vue {
     }
     EventBus.$emit('output', this.output);
   }
-
 
   clear() {
     this.output = '0';
@@ -81,14 +79,14 @@ export default class NumberPad extends Vue {
   @extend %clearfix;
 
   button {
-    @extend %outerShadow;
     float: left;
     width: 25%;
     height: 54px;
     outline: none;
-    border: none;
+    border: 1px solid #e6e6e6;
     transition: all .2s;
-
+    border-radius: 27px;
+    background-color: #fff;
     &.ok {
       height: 54*2px;
       float: right;
@@ -99,7 +97,7 @@ export default class NumberPad extends Vue {
     }
 
     &:active {
-      background-color: #c4c4c4;
+      background-color: #f5f5f5;
     }
   }
 }

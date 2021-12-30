@@ -29,7 +29,7 @@ export default {
 nav {
   display: flex;
   flex-direction: row;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  //border-top: 1px solid #e6e6e6;
   font-size: 12px;
   > .item {
     flex-grow: 1;
