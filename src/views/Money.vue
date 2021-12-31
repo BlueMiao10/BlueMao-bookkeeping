@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    {{ record }}
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
     <Notes @update:value="onUpdateNotes"/>
     <Tags :data-source="tags" @update:value="onUpdateTags"/>
@@ -53,7 +52,6 @@ export default class Money extends Vue {
   onRecordListChanged() {
     recordListModel.save(this.recordList);
   }
-
 }
 </script>
 

@@ -8,7 +8,7 @@
     </div>
     <div class="notes">
       <Icon name="addItem"/>
-      <input type="text" placeholder="标签名">
+      <input type="text" placeholder="请输入标签名">
     </div>
     <div class="current">
       <div v-for="tag in tags" :key="tag" @click="toggle(tag)"
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="sure">
-      <button @click="sure">确定</button>
+        <button @click="sure">确定</button>
     </div>
   </Layout>
 </template>
@@ -25,12 +25,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import tagListModel from '@/models/tagListModel';
 
+tagListModel.fetch();
 @Component
 export default class EditLabel extends Vue {
   selectedTags: string[] = [];
   tags: string[] = ['daily', 'donate', 'business', 'interest', 'fuel', 'medicine', 'makeup', 'phone', 'winning'];
-  addTag = [{}, {}];
 
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
@@ -45,7 +46,12 @@ export default class EditLabel extends Vue {
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
-      Vue.set(this.addTag[0], (this.selectedTags[0] as string), (name as never));
+      if (this.selectedTags.length > 0) {
+        Vue.set(tagListModel.data, (this.selectedTags[0]), name);
+        tagListModel.save();
+      } else {
+        alert('请选择图标');
+      }
     } else {
       alert('请输入标签名');
     }

@@ -5,7 +5,7 @@
         <Icon :name="tag"/>
         <span>{{ (type === '-' ? tags[0] : tags[1])[tag] }}</span>
       </div>
-      <Icon name="delete" class="delete"/>
+      <Icon name="delete"/>
     </li>
   </ol>
 </template>
@@ -28,6 +28,9 @@ export default class Tags extends Vue {
     EventBus.$on('value', (data: string) => {
       this.type = data;
     });
+    // EventBus.$on('dataSure', (data: Record<string, string>) => {
+    //   Vue.set((this.type === '-' ? this.tags[0] : this.tags[1]), Object.keys(data)[0], data[Object.keys(data)[0]]);
+    // });
   }
 }
 </script>

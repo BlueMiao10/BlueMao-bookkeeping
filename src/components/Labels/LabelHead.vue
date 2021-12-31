@@ -11,6 +11,7 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 
+
 @Component
 export default class LabelHead extends Vue {
 
@@ -18,7 +19,10 @@ export default class LabelHead extends Vue {
 </script>
 
 <style scoped lang="scss">
+@import "~@/assets/style/helper.scss";
+
 .labelHead {
+  @extend %clearfix;
   text-align: center;
   position: relative;
   padding-top: 10px;
