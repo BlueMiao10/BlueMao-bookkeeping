@@ -25,9 +25,9 @@ export default class Money extends Vue {
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
   recordList = recordList;
   tags = [{
-    'recreation': '一般', 'rent': '房租', 'cloth': '穿衣', 'transport': '出行', 'alcohol': '酒水', 'travel': '旅游', 'friend': '人情',
-    'snack': '零食', 'study': '学习', 'eat': '吃饭'
-  }, {'recreation': '一般', 'invest': '投资', 'salary': '工资', 'envelope': '红包', 'reimburse': '报销', 'bonus': '奖金'}];
+    '一般': 'recreation', '房租': 'rent', '穿衣': 'cloth', '出行': 'transport', '酒水': 'alcohol', '旅游': 'travel', '人情': 'friend',
+    '零食': 'snack', '学习': 'study', '吃饭': 'eat'
+  }, {'一般': 'recreation', '投资': 'invest', '工资': 'salary', '红包': 'envelope', '报销': 'reimburse', '奖金': 'bonus'}];
 
   onUpdateTags(value: Record<string, string>) {
     this.record.tags = [];
@@ -43,7 +43,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    recordListModel.create(this.record)
+    recordListModel.create(this.record);
   }
 
   @Watch('recordList')

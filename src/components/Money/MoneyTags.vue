@@ -4,8 +4,8 @@
     <ul class="current">
       <li v-for="tag in Object.keys(type === '-' ? dataSource[0]: dataSource[1])" :key="tag" @click="toggle(tag)"
           :class="{selected:arr.indexOf(tag)>=0}">
-        <Icon :name="tag"/>
-        {{ (type === '-' ? dataSource[0] : dataSource[1])[tag] }}
+        <Icon :name="(type === '-' ? dataSource[0] : dataSource[1])[tag]"/>
+        {{ tag }}
       </li>
       <li class="new">
         <router-link to="/labels" class="item" active-class="selected">
@@ -30,8 +30,8 @@ import Output from '@/components/Money/Output.vue';
 
 export default class Tags extends Vue {
   type = '-';
-  selectedTags: Record<string, string> = {'recreation': '一般'};
-  arr: string[] = ['recreation'];
+  selectedTags: Record<string, string> = { '一般':'recreation'};
+  arr: string[] = ['一般'];
   @Prop(Array) dataSource: Record<string, string>[] | undefined;
 
   toggle(tag: string) {
@@ -39,7 +39,7 @@ export default class Tags extends Vue {
     if (index >= 0) {
       this.arr.splice(index, 1);
       if (this.arr.length === 0) {
-        this.arr.push('recreation');
+        this.arr.push('一般');
       }
     } else {
       this.arr.shift();
