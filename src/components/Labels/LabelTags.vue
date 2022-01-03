@@ -1,36 +1,66 @@
 <template>
   <ol class="labelTags2">
-    <li v-for="tag in Object.keys(type === '-' ? tags[0]: tags[1])" :key="tag">
+    <li v-for="tag in Object.keys(type === '-' ? dataSource[0]: dataSource[1])" :key="tag">
       <div>
-        <Icon :name="tag"/>
-        <span>{{ (type === '-' ? tags[0] : tags[1])[tag] }}</span>
+        <Icon :name="(type === '-' ? dataSource[0] : dataSource[1])[tag]"/>
+        <span>{{ tag }}</span>
       </div>
       <Icon name="delete"/>
+    </li>
+    <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index" class="labelAdd">
+      <div>
+        <Icon :name="allTag.icon"/>
+        {{ allTag.name }}
+      </div>
+      <div>
+        <Icon name="delete" class="delete"/>
+      </div>
+    </li>
+    <li @click="updateTag">
+      <router-link to="/labels/edit">
+        <span>添加新的标签</span>
+        <Icon name="right" class="right"/>
+      </router-link>
     </li>
   </ol>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
+import labelListModel from '@/models/labelListModel';
+import tagListModel from '@/models/tagListModel';
 
 @Component
-
 export default class Tags extends Vue {
+  arrTag: Record<string, string> = {};
+  @Prop(Array) dataSource: Record<string, string>[] | undefined;
   type = '-';
-  tags = [{
-    'recreation': '一般', 'rent': '房租', 'cloth': '穿衣', 'transport': '出行', 'alcohol': '酒水', 'travel': '旅游', 'friend': '人情',
-    'snack': '零食', 'study': '学习', 'eat': '吃饭'
-  }, {'recreation': '一般', 'invest': '投资', 'salary': '工资', 'envelope': '红包', 'reimburse': '报销', 'bonus': '奖金'}];
+  newTag = tagListModel.fetch();
+
+  updateTag() {
+    if (this.dataSource) {
+      let arr = (this.type === '-' ? this.dataSource[0] : this.dataSource[1]);
+      Object.keys(arr).forEach(value => {
+        Vue.set(this.arrTag, value, arr[value]);
+      });
+      labelListModel.save(this.arrTag);
+    }
+  }
+
+  newArrayTag(number:number){
+    if((tagListModel.fetch())[0] === undefined){
+      return
+    }else{
+      return this.newTag[number].slice(1)
+    }
+  }
 
   created() {
     EventBus.$on('value', (data: string) => {
       this.type = data;
     });
-    // EventBus.$on('dataSure', (data: Record<string, string>) => {
-    //   Vue.set((this.type === '-' ? this.tags[0] : this.tags[1]), Object.keys(data)[0], data[Object.keys(data)[0]]);
-    // });
   }
 }
 </script>

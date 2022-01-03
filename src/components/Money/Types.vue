@@ -22,7 +22,6 @@ export default class Types extends Vue {
   //number|undefined 指PropA的类型   编译时  TS编译成JS的过程中
   // @Prop(Number) PropA:number|undefined;
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   selectType(value: string) {  //type只能是 +/- 中的一个，如果不是其中的一个，就会抛出错误
     if (value !== '-' && value !== '+') {
       throw new Error('type is unknown');

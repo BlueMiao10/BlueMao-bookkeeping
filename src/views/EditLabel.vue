@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="sure">
-        <button @click="sure">确定</button>
+      <button @click="sure">确定</button>
     </div>
   </Layout>
 </template>
@@ -26,6 +26,7 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
+import labelListModel from '@/models/labelListModel';
 
 tagListModel.fetch();
 @Component
@@ -47,8 +48,11 @@ export default class EditLabel extends Vue {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
       if (this.selectedTags.length > 0) {
-        Vue.set(tagListModel.data, (this.selectedTags[0]), name);
-        tagListModel.save();
+        if (Object.keys(labelListModel.fetch()).length > 8) {
+          tagListModel.createPay(name, this.selectedTags[0] as string);
+        } else {
+          tagListModel.createIncome(name, this.selectedTags[0]);
+        }
       } else {
         alert('请选择图标');
       }

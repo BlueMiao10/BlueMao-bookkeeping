@@ -2,9 +2,7 @@
   <Layout class="labelTag">
     <LabelHead/>
     <types :value.sync="labelTypeValue"/>
-    <LabelTags/>
-<!--    <LabelTagPay v-if="labelTypeValue === '-'"/>-->
-<!--    <LabelTagIncome  v-if="labelTypeValue === '+'"/>-->
+    <LabelTags :data-source="labelTags"/>
   </Layout>
 
 </template>
@@ -22,45 +20,14 @@ import LabelHead from '@/components/Labels/LabelHead.vue';
 })
 export default class Labels extends Vue {
   labelTypeValue = '-';
+  labelTags = [{
+    '一般': 'recreation', '房租': 'rent', '穿衣': 'cloth', '出行': 'transport', '酒水': 'alcohol', '旅游': 'travel', '人情': 'friend',
+    '零食': 'snack', '学习': 'study', '吃饭': 'eat'
+  }, {'一般': 'recreation', '投资': 'invest', '工资': 'salary', '红包': 'envelope', '报销': 'reimburse', '奖金': 'bonus'}];
 }
 
 </script>
 
 <style scoped lang="scss">
-.label {
-  padding: 0 3px;
 
-  .labelAdd {
-    div {
-      display: flex;
-      align-items: center;
-
-      .icon {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-    .icon {
-      margin-right: 10px;
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  li {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #e6e6e6;
-    padding-left: 10px;
-
-    .right {
-      margin-right: 10px;
-      width: 16px;
-      height: 16px;
-    }
-  }
-}
 </style>
