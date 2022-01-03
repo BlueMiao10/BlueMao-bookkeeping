@@ -35,11 +35,10 @@ import labelListModel from '@/models/labelListModel';
 import tagListModel from '@/models/tagListModel';
 import recordListModel from '@/models/recordListModel';
 
-tagListModel.fetch();
 @Component
 export default class Tags extends Vue {
   type = '-';
-  newTag = tagListModel.data;
+  newTag = window.tagList;
   tagPay = recordListModel.initLabel(0);
   tagIncome = recordListModel.initLabel(1);
 

@@ -7,7 +7,9 @@
         <Icon :name="tag.icon"/>
         {{ tag.name }}
       </li>
-      <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index" class="addLabel">
+      <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index"
+          @click="toggle(allTag.name,allTag.icon)"
+          :class="{selected:arr.indexOf(allTag.name)>=0}">
         <Icon :name="allTag.icon"/>
         {{ allTag.name }}
       </li>
@@ -26,10 +28,8 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 import Output from '@/components/Money/Output.vue';
-import tagListModel from '@/models/tagListModel';
 import recordListModel from '@/models/recordListModel';
 
-tagListModel.fetch();
 @Component({
   components: {Output}
 })
@@ -39,7 +39,7 @@ export default class Tags extends Vue {
   arr: string[] = ['一般'];
   tagPay = recordListModel.initLabel(0);
   tagIncome = recordListModel.initLabel(1);
-  newTag = tagListModel.data;
+  newTag = window.tagList;
 
   toggle(tag: string, icon: string) {
     const index = this.arr.indexOf(tag);
