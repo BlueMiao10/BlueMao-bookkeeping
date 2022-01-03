@@ -1,7 +1,9 @@
 <template>
   <Layout class="labelTag">
-    <LabelHead/>
-    <types :value.sync="labelTypeValue"/>
+    <div>
+      <LabelHead/>
+      <types :value.sync="labelTypeValue"/>
+    </div>
     <LabelTags :data-source="labelTags"/>
   </Layout>
 
@@ -14,9 +16,8 @@ import LabelTags from '@/components/Labels/LabelTags.vue';
 import Types from '@/components/Money/Types.vue';
 import LabelHead from '@/components/Labels/LabelHead.vue';
 
-
 @Component({
-  components: { LabelHead, Types, LabelTags}
+  components: {LabelHead, Types, LabelTags}
 })
 export default class Labels extends Vue {
   labelTypeValue = '-';
@@ -29,5 +30,13 @@ export default class Labels extends Vue {
 </script>
 
 <style scoped lang="scss">
+@import "~@/assets/style/helper.scss";
 
+.labelTag {
+  @extend %clearfix;
+
+  div {
+    @extend %clearfix;
+  }
+}
 </style>

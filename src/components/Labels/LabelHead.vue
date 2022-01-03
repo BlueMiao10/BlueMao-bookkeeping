@@ -26,7 +26,6 @@ export default class LabelHead extends Vue {
   text-align: center;
   position: relative;
   padding-top: 10px;
-
   .icon {
     position: absolute;
     top: 50%;

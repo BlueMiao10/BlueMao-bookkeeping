@@ -5,20 +5,22 @@
         <Icon :name="(type === '-' ? dataSource[0] : dataSource[1])[tag]"/>
         <span>{{ tag }}</span>
       </div>
-      <Icon name="delete"/>
+      <Icon name="lock"/>
     </li>
-    <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index" class="labelAdd">
+    <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index" class="addLabel">
       <div>
         <Icon :name="allTag.icon"/>
         {{ allTag.name }}
       </div>
-      <div>
-        <Icon name="delete" class="delete"/>
+      <div @click="remove(allTag.id)">
+        <Icon name="delete"/>
       </div>
     </li>
     <li @click="updateTag">
-      <router-link to="/labels/edit">
-        <span>添加新的标签</span>
+      <router-link to="/labels/edit" class="add">
+        <span>点击添加新的标签</span>
+        <Icon name="right" class="right"/>
+        <Icon name="right" class="right"/>
         <Icon name="right" class="right"/>
       </router-link>
     </li>
@@ -32,12 +34,13 @@ import EventBus from '@/eventBus';
 import labelListModel from '@/models/labelListModel';
 import tagListModel from '@/models/tagListModel';
 
+tagListModel.fetch();
 @Component
 export default class Tags extends Vue {
   arrTag: Record<string, string> = {};
-  @Prop(Array) dataSource: Record<string, string>[] | undefined;
+  @Prop(Array) dataSource?: Record<string, string>[];
   type = '-';
-  newTag = tagListModel.fetch();
+  newTag = tagListModel.data;
 
   updateTag() {
     if (this.dataSource) {
@@ -49,12 +52,16 @@ export default class Tags extends Vue {
     }
   }
 
-  newArrayTag(number:number){
-    if((tagListModel.fetch())[0] === undefined){
-      return
-    }else{
-      return this.newTag[number].slice(1)
+  newArrayTag(number: number) {
+    if ((this.newTag)[0] === undefined) {
+      return;
+    } else {
+      return this.newTag[number].slice(1);
     }
+  }
+
+  remove(id: string) {
+    tagListModel.destroy(id);
   }
 
   created() {
@@ -69,6 +76,7 @@ export default class Tags extends Vue {
 .labelTags2 {
   font-size: 16px;
   padding: 0 3px;
+  overflow: auto;
 
   li {
     min-height: 44px;
@@ -93,6 +101,17 @@ export default class Tags extends Vue {
       width: 16px;
       height: 16px;
     }
+
+    .add {
+      span {
+        padding-right: 10px;
+      }
+
+      .icon {
+        margin: 0
+      }
+    }
   }
+
 }
 </style>

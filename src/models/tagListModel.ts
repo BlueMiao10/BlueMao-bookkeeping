@@ -10,8 +10,8 @@ type TagListModel = {
   bool: boolean
   fetch: () => innerTag[][]
   init: () => innerTag[][]
-  createPay: (name: string, icon: string) => 'success'
-  createIncome: (name: string, icon: string) => 'success'
+  create: (name: string, icon: string, number: number) => 'success'
+  destroy: (id: string) => boolean
   save: (data: innerTag[][]) => void
 }
 
@@ -23,37 +23,40 @@ const tagListModel: TagListModel = {
     return this.data;
   },
   init() {
-    this.data = new Array(2).fill(0).map(() => new Array(1).fill(0))
-    // this.data = [...(new Array(2))].map(() => new Array(1));
+    this.data = new Array(2).fill(0).map(() => new Array(1).fill(0));
     return this.data;
   },
-  createPay(name: string, icon: string) {
+
+  create(name: string, icon: string, number: number) {
+    this.bool = this.data[0] === undefined;
     if (this.bool) {
       this.init();
-      this.data[0].push({id: name, name: name, icon: icon});
+      this.data[number].push({id: name, name: name, icon: icon});
       this.save(this.data);
       this.bool = false;
       return 'success';
     } else {
-      this.data[0].push({id: name, name: name, icon: icon});
+      this.data[number].push({id: name, name: name, icon: icon});
       this.save(this.data);
       return 'success';
     }
   },
-  createIncome(name: string, icon: string) {
-    if (this.bool) {
-      this.init()
-      this.data[1].push({id: name, name: name, icon: icon});
-      this.save(this.data);
-      this.bool = false;
-      return 'success';
-    } else {
-      this.data[1].push({id: name, name: name, icon: icon});
-      this.save(this.data);
-      return 'success';
+  destroy(id: string) {
+    let index = -1;
+    let index2 = -1;
+    for (let i = 0; i < 2; i++) {
+      for (let j = 0; j < this.data[i].length; j++) {
+        if (this.data[i][j].id === id) {
+          index = i;
+          index2 = j;
+          break;
+        }
+      }
     }
+    this.data[index].splice(index2, 1);
+    this.save(this.data);
+    return true;
   },
-
   save(data: innerTag[][]) {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(data));
   }
