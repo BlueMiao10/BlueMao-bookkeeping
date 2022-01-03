@@ -48,8 +48,8 @@ export default class EditLabel extends Vue {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
       if (this.selectedTags.length > 0) {
-        if (Object.keys(labelListModel.fetch()).length > 8) {
-          tagListModel.create(name, this.selectedTags[0] as string, 0);
+        if (labelListModel.fetch() > 8) {
+          tagListModel.create(name, this.selectedTags[0], 0);
         } else {
           tagListModel.create(name, this.selectedTags[0], 1);
         }

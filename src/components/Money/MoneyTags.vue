@@ -2,10 +2,14 @@
   <div class="tags">
     <Output/>
     <ul class="current">
-      <li v-for="tag in Object.keys(type === '-' ? dataSource[0]: dataSource[1])" :key="tag" @click="toggle(tag)"
-          :class="{selected:arr.indexOf(tag)>=0}">
-        <Icon :name="(type === '-' ? dataSource[0] : dataSource[1])[tag]"/>
-        {{ tag }}
+      <li v-for="tag in type === '-' ? tagPay: tagIncome" :key="tag.name" @click="toggle(tag.name,tag.icon)"
+          :class="{selected:arr.indexOf(tag.name)>=0}">
+        <Icon :name="tag.icon"/>
+        {{ tag.name }}
+      </li>
+      <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index" class="addLabel">
+        <Icon :name="allTag.icon"/>
+        {{ allTag.name }}
       </li>
       <li class="new">
         <router-link to="/labels" class="item" active-class="selected">
@@ -19,22 +23,25 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 import Output from '@/components/Money/Output.vue';
+import tagListModel from '@/models/tagListModel';
+import recordListModel from '@/models/recordListModel';
 
-
+tagListModel.fetch();
 @Component({
   components: {Output}
 })
-
 export default class Tags extends Vue {
   type = '-';
-  selectedTags: Record<string, string> = { '一般':'recreation'};
+  selectedTags = {name: '一般', icon: 'recreation'};
   arr: string[] = ['一般'];
-  @Prop(Array) dataSource: Record<string, string>[] | undefined;
+  tagPay = recordListModel.initLabel(0);
+  tagIncome = recordListModel.initLabel(1);
+  newTag = tagListModel.data;
 
-  toggle(tag: string) {
+  toggle(tag: string, icon: string) {
     const index = this.arr.indexOf(tag);
     if (index >= 0) {
       this.arr.splice(index, 1);
@@ -45,11 +52,17 @@ export default class Tags extends Vue {
       this.arr.shift();
       this.arr.push(tag);
     }
-    if (this.dataSource) {
-      this.selectedTags = {};
-      Vue.set(this.selectedTags, this.arr[0], (this.type === '-' ? (this.dataSource)[0] : (this.dataSource)[1])[this.arr[0]]);
-    }
+    this.selectedTags.name = tag;
+    this.selectedTags.icon = icon;
     this.$emit('update:value', this.selectedTags);
+  }
+
+  newArrayTag(number: number) {
+    if ((this.newTag)[0] === undefined) {
+      return;
+    } else {
+      return this.newTag[number].slice(1);
+    }
   }
 
   created() {

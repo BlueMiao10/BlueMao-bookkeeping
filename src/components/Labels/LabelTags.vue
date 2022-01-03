@@ -1,18 +1,18 @@
 <template>
   <ol class="labelTags2">
-    <li v-for="tag in Object.keys(type === '-' ? dataSource[0]: dataSource[1])" :key="tag">
+    <li v-for="tag in type === '-' ? tagPay: tagIncome" :key="tag.name">
       <div>
-        <Icon :name="(type === '-' ? dataSource[0] : dataSource[1])[tag]"/>
-        <span>{{ tag }}</span>
+        <Icon :name="tag.icon"/>
+        <span>{{ tag.name }}</span>
       </div>
       <Icon name="lock"/>
     </li>
-    <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index" class="addLabel">
+    <li v-for="(allTag,index) in (type === '-' ? newArrayTag(0): newArrayTag(1))" :key="index">
       <div>
         <Icon :name="allTag.icon"/>
         {{ allTag.name }}
       </div>
-      <div @click="remove(allTag.id)">
+      <div @click="remove(allTag.id)" class="delete">
         <Icon name="delete"/>
       </div>
     </li>
@@ -29,27 +29,23 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 import labelListModel from '@/models/labelListModel';
 import tagListModel from '@/models/tagListModel';
+import recordListModel from '@/models/recordListModel';
 
 tagListModel.fetch();
 @Component
 export default class Tags extends Vue {
-  arrTag: Record<string, string> = {};
-  @Prop(Array) dataSource?: Record<string, string>[];
   type = '-';
   newTag = tagListModel.data;
+  tagPay = recordListModel.initLabel(0);
+  tagIncome = recordListModel.initLabel(1);
 
   updateTag() {
-    if (this.dataSource) {
-      let arr = (this.type === '-' ? this.dataSource[0] : this.dataSource[1]);
-      Object.keys(arr).forEach(value => {
-        Vue.set(this.arrTag, value, arr[value]);
-      });
-      labelListModel.save(this.arrTag);
-    }
+    let arr = (this.type === '-' ? this.tagPay : this.tagIncome);
+    labelListModel.save(arr.map(item => item.name).length);
   }
 
   newArrayTag(number: number) {
@@ -76,7 +72,6 @@ export default class Tags extends Vue {
 .labelTags2 {
   font-size: 16px;
   padding: 0 3px;
-  overflow: auto;
 
   li {
     min-height: 44px;
@@ -89,29 +84,19 @@ export default class Tags extends Vue {
     div {
       display: flex;
       align-items: center;
-
-      .icon {
-        width: 24px;
-        height: 24px;
-      }
     }
 
     .icon {
+      width: 24px;
+      height: 24px;
       margin-right: 10px;
+    }
+
+    .right {
       width: 16px;
       height: 16px;
-    }
-
-    .add {
-      span {
-        padding-right: 10px;
-      }
-
-      .icon {
-        margin: 0
-      }
+      margin: 0
     }
   }
-
 }
 </style>

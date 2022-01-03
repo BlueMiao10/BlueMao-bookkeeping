@@ -2,7 +2,7 @@
   <Layout class-prefix="layout">
     <NumberPad :value.sync="onUpdateAmount" @submit="saveRecord"/>
     <Notes @update:value="onUpdateNotes"/>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags @update:value="onUpdateTags"/>
     <Types :value.sync="record.type"/>
   </Layout>
 </template>
@@ -24,10 +24,6 @@ const recordList = recordListModel.fetch();
 export default class Money extends Vue {
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
   recordList = recordList;
-  tags = [{
-    '一般': 'recreation', '房租': 'rent', '穿衣': 'cloth', '出行': 'transport', '酒水': 'alcohol', '旅游': 'travel', '人情': 'friend',
-    '零食': 'snack', '学习': 'study', '吃饭': 'eat'
-  }, {'一般': 'recreation', '投资': 'invest', '工资': 'salary', '红包': 'envelope', '报销': 'reimburse', '奖金': 'bonus'}];
 
   onUpdateTags(value: Record<string, string>) {
     this.record.tags = [];

@@ -1,11 +1,9 @@
 const localStorageKeyName = 'labelList';
 const labelListModel = {
-  data: {},
   fetch() {
-    this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '{}') as Record<string, string>;
-    return this.data;
+    return JSON.parse(<string>window.localStorage.getItem(localStorageKeyName));
   },
-  save(data:Record<string, string>) {
+  save(data: number) {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(data));
   }
 };
