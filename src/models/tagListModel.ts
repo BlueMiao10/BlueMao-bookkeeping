@@ -1,3 +1,5 @@
+import creatorId from '@/lib/creatorId';
+
 const localStorageKeyName = 'tagList';
 
 type innerTag = {
@@ -7,7 +9,6 @@ type innerTag = {
 }
 type TagListModel = {
   data: innerTag[][]
-  bool: boolean
   fetch: () => innerTag[][]
   init: () => innerTag[][]
   create: (name: string, icon: string, number: number) => 'success'
@@ -17,7 +18,6 @@ type TagListModel = {
 
 const tagListModel: TagListModel = {
   data: [],
-  bool: true,
   fetch() {
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '{}');
     return this.data;
@@ -28,18 +28,18 @@ const tagListModel: TagListModel = {
   },
 
   create(name: string, icon: string, number: number) {
-    this.bool = this.data[0] === undefined;
-    if (this.bool) {
+    let bool = this.data[0] === undefined;
+    const id = creatorId().toString();
+    if (bool) {
       this.init();
-      this.data[number].push({id: name, name: name, icon: icon});
-      this.save(this.data);
-      this.bool = false;
-      return 'success';
+      this.data[number].push({id, name: name, icon: icon});
+      bool = false;
     } else {
-      this.data[number].push({id: name, name: name, icon: icon});
+      this.data[number].push({id, name: name, icon: icon});
+    }
       this.save(this.data);
       return 'success';
-    }
+
   },
   destroy(id: string) {
     let index = -1;

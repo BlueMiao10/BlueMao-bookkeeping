@@ -17,9 +17,7 @@
       </div>
     </div>
     <div class="sure">
-      <router-link to="/labels">
-        <button @click="sure">确定</button>
-      </router-link>
+      <button @click="sure">确定</button>
     </div>
   </Layout>
 </template>
@@ -51,16 +49,19 @@ export default class EditLabel extends Vue {
     if (name) {
       if (this.selectedTags.length > 0) {
         if (Object.keys(labelListModel.fetch()).length > 8) {
-          tagListModel.create(name, this.selectedTags[0] as string,0);
+          tagListModel.create(name, this.selectedTags[0] as string, 0);
         } else {
-          tagListModel.create(name, this.selectedTags[0],1);
+          tagListModel.create(name, this.selectedTags[0], 1);
         }
       } else {
         alert('请选择图标');
+        return;
       }
     } else {
       alert('请输入标签名');
+      return;
     }
+    this.$router.replace('/labels');
   }
 }
 </script>
