@@ -1,6 +1,6 @@
 <template>
   <ol class="labelTags2">
-    <li v-for="tag in type === '-' ? tagPay: tagIncome" :key="tag.name">
+    <li v-for="tag in type === '-' ? $store.state.tagPay: $store.state.tagIncome" :key="tag.name">
       <div>
         <Icon :name="tag.icon"/>
         <span>{{ tag.name }}</span>
@@ -31,38 +31,43 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
-import store from '@/store/index2';
 
-@Component
+@Component({
+  computed: {
+    tagList() {
+      return this.$store.state.tagList;
+    }
+  }
+})
 export default class Tags extends Vue {
   type = '-';
-  newTag = store.tagList;
-  tagPay = store.selectRecord(0);
-  tagIncome = store.selectRecord(1);
 
   updateTag() {
-    let arr = (this.type === '-' ? this.tagPay : this.tagIncome);
-    if (arr) {
-      store.saveLabels(arr.map(item => item.name).length);
-    }
+    let arr = (this.type === '-' ? this.$store.state.tagPay : this.$store.state.tagIncome);
+    this.$store.commit('saveLabels', arr.map((item: Record<string, string>) => item.name).length);
+  }
+
+  get tagList() {
+    return this.$store.state.tagList;
   }
 
   newArrayTag(number: number) {
-    if ((this.newTag)[0] === undefined) {
+    if ((this.tagList)[0] === undefined) {
       return;
     } else {
-      return this.newTag[number].slice(1);
+      return this.tagList[number].slice(1);
     }
   }
 
   remove(id: string) {
-    store.removeTag(id);
+    this.$store.commit('removeTags', id);
   }
 
   created() {
     EventBus.$on('value', (data: string) => {
       this.type = data;
     });
+    this.$store.commit('fetchTags');
   }
 }
 </script>

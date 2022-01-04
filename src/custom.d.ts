@@ -12,14 +12,15 @@ type innerTag = {
   icon: string
 }
 
-type TagListModel = {
-  data: innerTag[][]
-  fetch: () => innerTag[][]
-  init: () => innerTag[][]
-  create: (name: string, icon: string, number: number) => 'success'
-  destroy: (id: string) => boolean
-  save: (data: innerTag[][]) => void
-}
+// type TagListModel = {
+//   data: innerTag[][]
+//   fetch: () => innerTag[][]
+//   init: () => innerTag[][]
+//   create: (name: string, icon: string, number: number) => 'success'
+//   destroy: (id: string) => boolean
+//   save: (data: innerTag[][]) => void
+//}
+
 
 // interface Window {
 // }

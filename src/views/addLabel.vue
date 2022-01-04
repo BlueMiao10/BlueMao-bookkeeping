@@ -12,7 +12,7 @@
     </div>
     <div class="current">
       <div v-for="tag in tags" :key="tag" @click="toggle(tag)"
-           :class="[{selected:selected.indexOf(tag)>=0},'currentTag']">
+           :class="[{selected:selectedTags.indexOf(tag)>=0},'currentTag']">
         <Icon :name="tag"/>
       </div>
     </div>
@@ -25,22 +25,36 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import store from '@/store/index2';
+import store from '@/store';
 
-@Component
+@Component({
+  computed: {
+    tagList() {
+      return this.$store.state.tagList;
+    }
+  }
+})
 export default class EditLabel extends Vue {
-  tags: string[] = store.createLabel();
+  tags = store.state.labels;
   selected: string[] = [];
 
+  created() {
+    this.$store.commit('fetchTags');
+  }
+
+  get selectedTags() {
+    return this.$store.state.selectedTags;
+  }
+
   toggle(tag: string) {
-    this.selected = store.selectLabel(tag);
+    this.$store.commit('selectLabels', tag);
   }
 
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
       if (this.selected.length > 0) {
-        store.createTag(name, this.selected[0]);
+        this.$store.commit('createTags', {name: name, icon: this.selected[0]});
       } else {
         alert('请选择图标');
         return;

@@ -2,7 +2,7 @@
   <div class="tags">
     <Output/>
     <ul class="current">
-      <li v-for="tag in type === '-' ? tagPay: tagIncome" :key="tag.name" @click="toggle(tag.name,tag.icon)"
+      <li v-for="tag in type === '-' ? $store.state.tagPay: $store.state.tagIncome" :key="tag.name" @click="toggle(tag.name,tag.icon)"
           :class="{selected:arr.indexOf(tag.name)>=0}">
         <Icon :name="tag.icon"/>
         {{ tag.name }}
@@ -28,18 +28,21 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 import Output from '@/components/Money/Output.vue';
-import store from '@/store/index2';
+import store from '@/store';
 
 @Component({
-  components: {Output}
+  components: {Output},
+  computed: {
+    tagList() {
+      return this.$store.state.tagList;
+    }
+  }
 })
 export default class Tags extends Vue {
   type = '-';
   selectedTags = {name: '一般', icon: 'recreation'};
   arr: string[] = ['一般'];
-  tagPay = store.selectRecord(0);
-  tagIncome = store.selectRecord(1);
-  newTag = store.tagList;
+  newTag = store.state.tagList;
 
   toggle(tag: string, icon: string) {
     const index = this.arr.indexOf(tag);
@@ -66,12 +69,12 @@ export default class Tags extends Vue {
   }
 
   created() {
+    this.$store.commit('fetchTags');
     EventBus.$on('value', (data: string) => {
       this.type = data;
     });
     this.$emit('update:value', this.selectedTags);
   }
-
 }
 </script>
 
