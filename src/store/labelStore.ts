@@ -1,20 +1,21 @@
 const localStorageKeyName = 'labelList';
-const labelListModel = {
-  newIcon() {
+
+const labelStore = {
+  createLabel: () => {
     return ['daily', 'donate', 'business', 'interest', 'fuel', 'medicine', 'makeup', 'phone', 'winning'];
   },
-  select(tag: string) {
+  selectLabel: (tag: string) => {
     const selectedTags: string[] = [];
     selectedTags.shift();
     selectedTags.push(tag);
     return selectedTags;
   },
-  fetch() {
+  fetchLabels() {
     return JSON.parse(<string>window.localStorage.getItem(localStorageKeyName));
   },
-  save(data: number) {
+  saveLabels(data: number) {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(data));
   }
 };
-
-export default labelListModel;
+labelStore.fetchLabels();
+export default labelStore;

@@ -6,12 +6,12 @@ type RecordItem = {
   createdAt?: Date  // 类 / 构造函数
 }
 
-
 type innerTag = {
   id: string
   name: string
   icon: string
 }
+
 type TagListModel = {
   data: innerTag[][]
   fetch: () => innerTag[][]

@@ -43,7 +43,7 @@ export default class Tags extends Vue {
   updateTag() {
     let arr = (this.type === '-' ? this.tagPay : this.tagIncome);
     if (arr) {
-      store.saveLabel(arr.map(item => item.name).length);
+      store.saveLabels(arr.map(item => item.name).length);
     }
   }
 

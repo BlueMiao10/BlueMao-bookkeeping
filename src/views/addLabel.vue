@@ -49,7 +49,7 @@ export default class EditLabel extends Vue {
       alert('请输入标签名');
       return;
     }
-    this.$router.back('/labels');
+    this.$router.replace('/labels');
   }
 }
 </script>
