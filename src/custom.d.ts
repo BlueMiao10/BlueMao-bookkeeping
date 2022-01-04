@@ -25,4 +25,6 @@ interface Window {
   tagList: innerTag[][],
   createTag: (name: string, value: string) => void
   removeTag: (id: string) => void
+  recordList: RecordItem[]
+  createRecord: (record: RecordItem) => void
 }
