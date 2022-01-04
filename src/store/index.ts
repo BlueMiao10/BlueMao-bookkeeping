@@ -67,7 +67,6 @@ const store = new Vuex.Store({
         }
       }
       store.commit('saveTags');
-      return;
     },
     removeTags: (state, id) => {
       let index = -1;

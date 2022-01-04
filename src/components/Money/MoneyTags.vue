@@ -2,7 +2,8 @@
   <div class="tags">
     <Output/>
     <ul class="current">
-      <li v-for="tag in type === '-' ? $store.state.tagPay: $store.state.tagIncome" :key="tag.name" @click="toggle(tag.name,tag.icon)"
+      <li v-for="tag in type === '-' ? $store.state.tagPay: $store.state.tagIncome" :key="tag.name"
+          @click="toggle(tag.name,tag.icon)"
           :class="{selected:arr.indexOf(tag.name)>=0}">
         <Icon :name="tag.icon"/>
         {{ tag.name }}
@@ -31,18 +32,17 @@ import Output from '@/components/Money/Output.vue';
 import store from '@/store';
 
 @Component({
-  components: {Output},
-  computed: {
-    tagList() {
-      return this.$store.state.tagList;
-    }
-  }
+  components: {Output}
 })
 export default class Tags extends Vue {
   type = '-';
   selectedTags = {name: '一般', icon: 'recreation'};
   arr: string[] = ['一般'];
   newTag = store.state.tagList;
+
+  get tagList() {
+    return this.$store.state.tagList;
+  }
 
   toggle(tag: string, icon: string) {
     const index = this.arr.indexOf(tag);

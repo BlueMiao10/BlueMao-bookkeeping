@@ -27,13 +27,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import store from '@/store';
 
-@Component({
-  computed: {
-    tagList() {
-      return this.$store.state.tagList;
-    }
-  }
-})
+@Component
 export default class EditLabel extends Vue {
   tags = store.state.labels;
   selected: string[] = [];
@@ -53,8 +47,8 @@ export default class EditLabel extends Vue {
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
-      if (this.selected.length > 0) {
-        this.$store.commit('createTags', {name: name, icon: this.selected[0]});
+      if (this.selectedTags.length > 0) {
+        this.$store.commit('createTags', {name: name, icon: this.selectedTags[0]});
       } else {
         alert('请选择图标');
         return;
