@@ -12,7 +12,7 @@
     </div>
     <div class="current">
       <div v-for="tag in tags" :key="tag" @click="toggle(tag)"
-           :class="[{selected:selectedTags.indexOf(tag)>=0},'currentTag']">
+           :class="[{selected:selected.indexOf(tag)>=0},'currentTag']">
         <Icon :name="tag"/>
       </div>
     </div>
@@ -25,34 +25,22 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import labelListModel from '@/models/labelListModel';
 
-tagListModel.fetch();
 @Component
 export default class EditLabel extends Vue {
-  selectedTags: string[] = [];
-  tags: string[] = ['daily', 'donate', 'business', 'interest', 'fuel', 'medicine', 'makeup', 'phone', 'winning'];
+  tags: string[] = labelListModel.newIcon();
+  selected: string[] = [];
 
   toggle(tag: string) {
-    const index = this.selectedTags.indexOf(tag);
-    if (index >= 0) {
-      this.selectedTags.splice(index, 1);
-    } else {
-      this.selectedTags.shift();
-      this.selectedTags.push(tag);
-    }
+    this.selected = labelListModel.select(tag);
   }
 
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
-      if (this.selectedTags.length > 0) {
-        if (labelListModel.fetch() > 8) {
-          tagListModel.create(name, this.selectedTags[0], 0);
-        } else {
-          tagListModel.create(name, this.selectedTags[0], 1);
-        }
+      if (this.selected.length >= 0) {
+        window.createTag(name, this.selected[0]);
       } else {
         alert('请选择图标');
         return;

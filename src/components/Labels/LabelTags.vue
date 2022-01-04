@@ -32,7 +32,6 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 import labelListModel from '@/models/labelListModel';
-import tagListModel from '@/models/tagListModel';
 import recordListModel from '@/models/recordListModel';
 
 @Component
@@ -44,7 +43,9 @@ export default class Tags extends Vue {
 
   updateTag() {
     let arr = (this.type === '-' ? this.tagPay : this.tagIncome);
-    labelListModel.save(arr.map(item => item.name).length);
+    if (arr) {
+      labelListModel.save(arr.map(item => item.name).length);
+    }
   }
 
   newArrayTag(number: number) {
@@ -56,7 +57,7 @@ export default class Tags extends Vue {
   }
 
   remove(id: string) {
-    tagListModel.destroy(id);
+    window.removeTag(id);
   }
 
   created() {
