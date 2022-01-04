@@ -14,6 +14,7 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/MoneyTags.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component} from 'vue-property-decorator';
+import store from '@/store/index2';
 
 
 @Component({
@@ -22,7 +23,7 @@ import {Component} from 'vue-property-decorator';
 
 export default class Money extends Vue {
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
-  recordList = window.recordList;
+  recordList = store.recordList;
 
   onUpdateTags(value: Record<string, string>) {
     this.record.tags = [];
@@ -38,7 +39,7 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    window.createRecord(this.record);
+    store.createRecord(this.record);
   }
 }
 </script>

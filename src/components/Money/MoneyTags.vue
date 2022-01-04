@@ -28,7 +28,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
 import Output from '@/components/Money/Output.vue';
-import recordListModel from '@/models/recordListModel';
+import store from '@/store/index2';
 
 @Component({
   components: {Output}
@@ -37,9 +37,9 @@ export default class Tags extends Vue {
   type = '-';
   selectedTags = {name: '一般', icon: 'recreation'};
   arr: string[] = ['一般'];
-  tagPay = recordListModel.initLabel(0);
-  tagIncome = recordListModel.initLabel(1);
-  newTag = window.tagList;
+  tagPay = store.selectRecord(0);
+  tagIncome = store.selectRecord(1);
+  newTag = store.tagList;
 
   toggle(tag: string, icon: string) {
     const index = this.arr.indexOf(tag);

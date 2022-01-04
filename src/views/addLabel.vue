@@ -25,22 +25,22 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import labelListModel from '@/models/labelListModel';
+import store from '@/store/index2';
 
 @Component
 export default class EditLabel extends Vue {
-  tags: string[] = labelListModel.newIcon();
+  tags: string[] = store.createLabel();
   selected: string[] = [];
 
   toggle(tag: string) {
-    this.selected = labelListModel.select(tag);
+    this.selected = store.selectLabel(tag);
   }
 
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
-      if (this.selected.length >= 0) {
-        window.createTag(name, this.selected[0]);
+      if (this.selected.length > 0) {
+        store.createTag(name, this.selected[0]);
       } else {
         alert('请选择图标');
         return;
@@ -49,7 +49,7 @@ export default class EditLabel extends Vue {
       alert('请输入标签名');
       return;
     }
-    this.$router.replace('/labels');
+    this.$router.back('/labels');
   }
 }
 </script>

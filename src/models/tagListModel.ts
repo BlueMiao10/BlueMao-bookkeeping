@@ -25,7 +25,6 @@ const tagListModel: TagListModel = {
     }
     this.save(this.data);
     return 'success';
-
   },
   destroy(id: string) {
     let index = -1;

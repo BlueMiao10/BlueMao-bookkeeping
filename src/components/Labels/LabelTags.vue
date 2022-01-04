@@ -31,20 +31,19 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import EventBus from '@/eventBus';
-import labelListModel from '@/models/labelListModel';
-import recordListModel from '@/models/recordListModel';
+import store from '@/store/index2';
 
 @Component
 export default class Tags extends Vue {
   type = '-';
-  newTag = window.tagList;
-  tagPay = recordListModel.initLabel(0);
-  tagIncome = recordListModel.initLabel(1);
+  newTag = store.tagList;
+  tagPay = store.selectRecord(0);
+  tagIncome = store.selectRecord(1);
 
   updateTag() {
     let arr = (this.type === '-' ? this.tagPay : this.tagIncome);
     if (arr) {
-      labelListModel.save(arr.map(item => item.name).length);
+      store.saveLabel(arr.map(item => item.name).length);
     }
   }
 
@@ -57,7 +56,7 @@ export default class Tags extends Vue {
   }
 
   remove(id: string) {
-    window.removeTag(id);
+    store.removeTag(id);
   }
 
   created() {
