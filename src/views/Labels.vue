@@ -12,8 +12,8 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import LabelTags from '@/components/Labels/LabelTags.vue';
 import LabelHead from '@/components/Labels/LabelHead.vue';
-import Tabs from '@/components/Tabs';
 import recordTypeList from '@/constants/recordTypeList';
+import Tabs from '@/components/Tabs.vue';
 
 @Component({
   components: {LabelHead, LabelTags, Tabs}
