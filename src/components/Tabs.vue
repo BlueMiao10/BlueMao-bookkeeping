@@ -10,6 +10,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import EventBus from '@/eventBus';
 
 type DataSourceItem = { text: string, value: string }
 @Component
@@ -27,6 +28,7 @@ export default class Tabs extends Vue {
 
   select(item: DataSourceItem) {
     this.$emit('update:value', item.value);
+    EventBus.$emit('submitTab',item.value)
   }
 }
 </script>

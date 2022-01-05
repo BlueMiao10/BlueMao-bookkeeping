@@ -34,7 +34,7 @@ import store from '@/store';
 @Component({
   components: {Output}
 })
-export default class Tags extends Vue {
+export default class MoneyTags extends Vue {
   type = '-';
   selectedTags = {name: '一般', icon: 'recreation'};
   arr: string[] = ['一般'];
@@ -70,7 +70,7 @@ export default class Tags extends Vue {
 
   created() {
     this.$store.commit('fetchTags');
-    EventBus.$on('value', (data: string) => {
+    EventBus.$on('submitTab', (data: string) => {
       this.type = data;
     });
     this.$emit('update:value', this.selectedTags);

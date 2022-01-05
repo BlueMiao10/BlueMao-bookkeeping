@@ -1,9 +1,7 @@
 <template>
   <Layout class="labelTag">
-    <div>
-      <LabelHead/>
-      <types :value.sync="labelTypeValue"/>
-    </div>
+    <LabelHead/>
+    <Tabs :data-source="recordTypeList" :value.sync="labelTypeValue"/>
     <LabelTags/>
   </Layout>
 
@@ -13,14 +11,16 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import LabelTags from '@/components/Labels/LabelTags.vue';
-import Types from '@/components/Money/Types.vue';
 import LabelHead from '@/components/Labels/LabelHead.vue';
+import Tabs from '@/components/Tabs';
+import recordTypeList from '@/constants/recordTypeList';
 
 @Component({
-  components: {LabelHead, Types, LabelTags}
+  components: {LabelHead, LabelTags, Tabs}
 })
 export default class Labels extends Vue {
   labelTypeValue = '-';
+  recordTypeList = recordTypeList;
 }
 
 </script>

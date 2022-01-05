@@ -2,8 +2,8 @@
   <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
     <Notes @update:value="onUpdateNotes"/>
-    <Tags @update:value="onUpdateTags"/>
-    <Types :value.sync="record.type"/>
+    <MoneyTags @update:value="onUpdateTags"/>
+    <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
   </Layout>
 </template>
 
@@ -11,17 +11,19 @@
 import Vue from 'vue';
 import NumberPad from '@/components/Money/Numberpad.vue';
 import Notes from '@/components/Money/Notes.vue';
-import Tags from '@/components/Money/MoneyTags.vue';
-import Types from '@/components/Money/Types.vue';
 import {Component} from 'vue-property-decorator';
+import recordTypeList from '@/constants/recordTypeList';
+import Tabs from '@/components/Tabs.vue';
+import MoneyTags from '@/components/Money/MoneyTags.vue';
 
 
 @Component({
-  components: {Types, Tags, Notes, NumberPad}
+  components: {MoneyTags, Notes, NumberPad, Tabs}
 })
 
 export default class Money extends Vue {
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
+  recordTypeList = recordTypeList;
 
   created() {
     this.$store.commit('fetchRecords');
