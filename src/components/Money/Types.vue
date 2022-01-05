@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul class="types">
-      <li :class=" value === '+' && 'selected' " @click="selectType('+')">收入</li>
-      <li :class=" value === '-' && 'selected' " @click="selectType('-')">支出</li>
+      <li :class="{[classPrefix+'-item']:classPrefix,selected:value==='+'}" @click="selectType('+')">收入</li>
+      <li :class=" {[classPrefix+'-item']:classPrefix,selected:value==='-'} " @click="selectType('-')">支出</li>
     </ul>
   </div>
 </template>
@@ -14,7 +14,8 @@ import EventBus from '@/eventBus';
 
 @Component
 export default class Types extends Vue {
-  @Prop() readonly value!: string;
+  @Prop(String) readonly value!: string;
+  @Prop(String) classPrefix?: string;
 
   //@Prop 告诉 Vue PropA 不是data 是  Prop
   //Number 告诉 Vue PropA 是个 Number   运行时  JS在浏览器或者Node环境运行的过程中

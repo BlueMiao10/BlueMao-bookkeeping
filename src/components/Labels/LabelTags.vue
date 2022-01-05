@@ -37,6 +37,7 @@ export default class Tags extends Vue {
   type = '-';
 
   updateTag() {
+    console.log(this.type);
     let arr = (this.type === '-' ? this.$store.state.tagPay : this.$store.state.tagIncome);
     this.$store.commit('saveLabels', arr.map((item: Record<string, string>) => item.name).length);
   }
