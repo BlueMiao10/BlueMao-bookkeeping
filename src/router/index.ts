@@ -5,24 +5,20 @@ import Labels from '@/views/Labels.vue';
 import Statistics from '@/views/Statistics.vue';
 import NotFound from '@/views/NotFound.vue';
 import EditLabel from '@/views/addLabel.vue';
+import FrontPage from '@/views/FrontPage.vue';
 // import FrontPage from '@/views/FrontPage.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  //默认路径进入'/FrontPage'
-  // {
-  //   path: '/',
-  //   redirect: '/frontpage'
-  // },
-  // //首页
-  // {
-  //   path:'/frontpage',
-  //   component:FrontPage
-  // },
   {
     path: '/',
-    redirect: '/money'
+    redirect: '/frontpage'
+  },
+  //首页
+  {
+    path: '/frontpage',
+    component: FrontPage
   },
   //记账
   {

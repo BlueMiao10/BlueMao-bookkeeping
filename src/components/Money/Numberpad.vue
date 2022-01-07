@@ -30,7 +30,7 @@ export default class NumberPad extends Vue {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent as string;
     if (this.output.length === 9) {
-      EventBus.$emit('output', this.output);
+      EventBus.$emit('output', parseInt(this.output));
       return;
     }
     if (this.output === '0') {
@@ -39,12 +39,12 @@ export default class NumberPad extends Vue {
       } else {
         this.output += input;
       }
-      EventBus.$emit('output', this.output);
+      EventBus.$emit('output', parseInt(this.output));
       return;
     }
     if (this.output.indexOf('.') >= 0 && input === '.') {return;}
     this.output += input;
-    EventBus.$emit('output', this.output);
+    EventBus.$emit('output', parseInt(this.output));
   }
 
   remove() {
@@ -53,20 +53,20 @@ export default class NumberPad extends Vue {
     } else {
       this.output = this.output.slice(0, -1);
     }
-    EventBus.$emit('output', this.output);
+    EventBus.$emit('output', parseInt(this.output));
   }
 
   clear() {
     this.output = '0';
-    EventBus.$emit('output', this.output);
+    EventBus.$emit('output', parseInt(this.output));
   }
 
   ok() {
-    this.$emit('update:value', this.output);
+    this.$emit('update:value', parseFloat(this.output));
     //这里的名字可以随便取
-    this.$emit('submit', this.output);
+    this.$emit('submit', parseInt(this.output));
     this.output = '0';
-    EventBus.$emit('output', this.output);
+    EventBus.$emit('output', parseInt(this.output));
   }
 
 }

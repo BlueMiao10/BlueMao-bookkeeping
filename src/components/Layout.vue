@@ -9,7 +9,7 @@
 
 <script lang="ts">
 export default {
-  props:['classPrefix'],
+  props: ['classPrefix'],
   name: 'Layout'
 };
 </script>
@@ -24,7 +24,8 @@ export default {
 
 .content {
   /*查出部分，只有内容区域会滚动*/
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   flex-grow: 1;
 }
 </style>
