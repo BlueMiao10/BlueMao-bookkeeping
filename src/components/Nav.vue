@@ -29,8 +29,9 @@ export default {
 nav {
   display: flex;
   flex-direction: row;
-  //border-top: 1px solid #e6e6e6;
   font-size: 12px;
+  padding-top: 2px;
+  border-top: 1px solid rgba(186, 182, 182, 0.3);
   > .item {
     flex-grow: 1;
     display: flex;

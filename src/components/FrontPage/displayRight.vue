@@ -1,7 +1,7 @@
 <template>
   <ol :data-source="recordTypeList" class="xxx">
     <li v-for="(group,index) in groupList" :key="index">
-      <div class="title"><span> ￥{{ group.total }}</span></div>
+      <div class="title"> ￥{{ group.total }}</div>
       <div v-for="item in group.items" :key="item.id" class="record" :class="{selected:item.type==='+'}">
         <div class="iconTags">
           <Icon :name="item.tags[0].icon"/>
@@ -64,15 +64,17 @@ export default class display extends Vue {
   flex-direction: column;
 
   .title {
-    padding-left: 5px;
+    padding-left: 15px;
     font-size: 14px;
     color: rgba(170, 165, 165, 0.5);
+    text-align: left;
+    opacity: 0;
   }
 
   .record {
     display: flex;
     flex-direction: row;
-    margin: 35px -13px;
+    margin: 20px -13px;
     text-align: center;
     padding-left: -10px;
     align-items: center;

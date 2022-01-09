@@ -53,8 +53,30 @@ export default class Tags extends Vue {
     }
   }
 
+  open(id:string) {
+    this.$confirm('确认删除？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      this.$message({
+        type: 'success',
+        message: '删除成功!',
+        duration:1000
+      });
+      this.$store.commit('removeTags', id);
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: '已取消删除',
+        duration:1000
+      });
+      return;
+    });
+  }
+
   remove(id: string) {
-    this.$store.commit('removeTags', id);
+    this.open(id);
   }
 
   created() {

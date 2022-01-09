@@ -16,7 +16,6 @@ import recordTypeList from '@/constants/recordTypeList';
 import Tabs from '@/components/Tabs.vue';
 import MoneyTags from '@/components/Money/MoneyTags.vue';
 
-
 @Component({
   components: {MoneyTags, Notes, NumberPad, Tabs}
 })
@@ -27,7 +26,7 @@ export default class Money extends Vue {
 
   created() {
     this.$store.commit('fetchRecords');
-    this.$store.commit('fetchTags')
+    this.$store.commit('fetchTags');
   }
 
   get recordList() {
@@ -47,8 +46,39 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
 
+  open() {
+    this.$confirm('还没有输入金额哦, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      this.$message({
+        type: 'success',
+        message: '添加成功!',
+        duration: 1000
+      });
+      this.$store.commit('createRecords', this.record);
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: '已取消添加',
+        duration: 1000
+      });
+      return;
+    });
+  }
+
   saveRecord() {
-    this.$store.commit('createRecords', this.record);
+    if (this.record.amount === 0) {
+      this.open();
+    } else {
+      this.$message({
+        type: 'success',
+        message: '添加成功!',
+        duration: 1000
+      });
+      this.$store.commit('createRecords', this.record);
+    }
   }
 }
 </script>

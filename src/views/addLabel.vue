@@ -50,11 +50,19 @@ export default class EditLabel extends Vue {
       if (this.selectedTags.length > 0) {
         this.$store.commit('createTags', {name: name, icon: this.selectedTags[0]});
       } else {
-        alert('请选择图标');
+        this.$message({
+          message: '请选择图标',
+          type: 'warning',
+          duration:1000
+        });
         return;
       }
     } else {
-      alert('请输入标签名');
+      this.$message({
+        message: '请填写标签',
+        type: 'warning',
+        duration:1000
+      });
       return;
     }
     this.$router.replace('/labels');

@@ -69,12 +69,13 @@ export default class display extends Vue {
     font-size: 14px;
     color: rgba(170, 165, 165, 0.5);
     text-align: right;
+    margin-right: -36px;
   }
 
   .record {
     display: flex;
     flex-direction: row-reverse;
-    margin: 35px -13px;
+    margin: 20px -13px;
     text-align: center;
     align-items: center;
   }
@@ -86,9 +87,10 @@ export default class display extends Vue {
   .itemLeft {
     display: flex;
     flex-direction: row;
-    .itemName{
+
+    .itemName {
       display: inline-block;
-      padding-right:5px ;
+      padding-right: 5px;
     }
   }
 

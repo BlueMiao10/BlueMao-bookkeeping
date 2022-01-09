@@ -1,12 +1,10 @@
 <template>
   <Layout class="frontPage">
-    <div class="background">
-      <span class="dayKeeping" @click="select">日常账本</span>
-      <span class="dayKeeping selected" @click="select2">余额：1880元</span>
-    </div>
+    <div class="background"></div>
     <div class="bookKeeping" @click="enter">
       <Icon name="bookKeeping" class="box"/>
     </div>
+    <div class="tip" v-if="recordList.length === 0">快开始记账吧</div>
     <div class="container">
       <display-left/>
       <display-right/>
@@ -25,6 +23,10 @@ import DisplayRight from '@/components/FrontPage/displayRight.vue';
   components: {DisplayRight, DisplayLeft, Display}
 })
 export default class FrontPage extends Vue {
+  get recordList() {
+    return this.$store.state.recordList;
+  }
+
   enter() {
     const a = document.querySelector('.box') as HTMLElement;
     a.classList.add('selected');
@@ -34,16 +36,8 @@ export default class FrontPage extends Vue {
     }, 300);
   }
 
-  select() {
-    const b = document.querySelectorAll('.dayKeeping');
-    b[1].classList.remove('selected');
-    b[0].classList.add('selected');
-  }
-
-  select2() {
-    const b = document.querySelectorAll('.dayKeeping');
-    b[0].classList.remove('selected');
-    b[1].classList.add('selected');
+  created() {
+    this.$store.commit('fetchRecords');
   }
 }
 </script>
@@ -53,7 +47,7 @@ export default class FrontPage extends Vue {
 
 .frontPage {
   @extend %clearfix;
-  overflow: hidden;
+  text-align: center;
 
   .background {
     width: 100%;
@@ -64,51 +58,43 @@ export default class FrontPage extends Vue {
     opacity: 0.9;
     text-align: center;
     padding-top: 25px;
-
-    .dayKeeping {
-      color: rgba(245, 241, 241, 0.8);
-      display: inline-block;
-      padding: 2px 10px;
-      box-shadow: 0 0 1px 1px rgba(224, 216, 216, 0.6);
-      border-radius: 20px;
-      background-color: rgba(116, 111, 111, 0.5);
-    }
-
-    .dayKeeping.selected {
-      display: none;
-    }
   }
+}
 
-  .bookKeeping {
+.bookKeeping {
+  float: left;
+  position: relative;
+  left: 50%;
+  border-radius: 50%;
+  margin-top: -6vh;
+  transform: translateX(-50%);
+  background-color: white;
+
+  .icon {
     float: left;
     position: relative;
-    left: 50%;
-    border-radius: 50%;
-    margin-top: -6vh;
-    transform: translateX(-50%);
-    background-color: white;
+    width: 80px;
+    height: 80px;
+    margin: 8px;
+    transition: all .3s;
 
-    .icon {
-      float: left;
-      position: relative;
-      width: 80px;
-      height: 80px;
-      margin: 8px;
-      transition: all .3s;
-
-      &.selected {
-        transform: rotate(-90deg);
-      }
+    &.selected {
+      transform: rotate(-90deg);
     }
   }
+}
 
-  .container {
-    @extend %clearfix;
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+.container {
+  @extend %clearfix;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+.tip {
+  margin-top: 10vh;
+  color: #e6e6e6;
+  font-size: 24px;
 }
 </style>
