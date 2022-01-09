@@ -1,41 +1,23 @@
 <template>
-  <div class="labelHead">
-    <router-link to="/money">
-      <icon name="left"/>
-    </router-link>
-    <span>编辑标签</span>
-  </div>
+  <el-page-header @back="goBack" content="编辑标签"></el-page-header>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 
-
 @Component
 export default class LabelHead extends Vue {
-
+  goBack() {
+    this.$router.replace('/money');
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import "~@/assets/style/helper.scss";
 
-.labelHead {
-  @extend %clearfix;
-  text-align: center;
-  position: relative;
-  padding-top: 10px;
-  .icon {
-    position: absolute;
-    top: 50%;
-    left: 2%;
-    transform: translateY(-50%);
-  }
-
-  span {
-    display: block;
-    padding-bottom: 6px;
-  }
+.el-page-header {
+  margin: 10px 10px;
 }
 </style>

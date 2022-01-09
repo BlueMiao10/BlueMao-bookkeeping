@@ -1,13 +1,15 @@
 <template>
   <Layout>
-    <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <el-empty :image-size="200" v-if="groupList.length === 0"></el-empty>
-    <ol>
+    <ol v-else>
       <li v-for="(group,index) in groupList" :key="index">
-        <h3 class="title">{{ beautify(group.title) }}<span>总计：￥{{ group.total }}</span></h3>
+        <h3 class="title">
+          <span class="timeNow">{{ beautify(group.title) }}</span>
+          <span class="income">收入：{{ group.income }}元</span>
+          <span>支出：{{ group.pay }} 元</span>
+        </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
-
             <div class="iconTags">
               <Icon :name="item.tags[0].icon"/>
               <span>{{ item.tags[0].name }}</span>
@@ -15,7 +17,7 @@
             <div class="notes">
               <span class="notes" :style="{marginRight:'auto'}">{{ item.notes }}</span>
             </div>
-            <span class="moneyCount">￥{{ item.amount }}</span>
+            <span class="moneyCount">{{ item.amount }}</span>
           </li>
         </ol>
       </li>
@@ -35,6 +37,7 @@ import clone from '@/lib/clone';
   components: {Tabs},
 })
 export default class Statistics extends Vue {
+  value = '';
   type = '-';
   interval = 'day';
   recordTypeList = recordTypeList;
@@ -46,9 +49,14 @@ export default class Statistics extends Vue {
   get groupList() {
     const {recordList} = this;
     if (recordList.length === 0) {return [];}
-    type Result = { title: string, total?: number, items: RecordItem[] }[]
-    const newList = clone(recordList).filter((r: RecordItem) => r.type === this.type).sort((a: RecordItem, b: RecordItem) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
-    if(newList.length === 0){return []}
+    type Result = { title: string, total?: number, income?: number, pay?: number, items: RecordItem[] }[]
+    const newList = clone(recordList).sort((a: RecordItem, b: RecordItem) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+    if (newList.length === 0) {return [];}
+    newList.map((item: RecordItem) => {
+      if (item.type === '-') {
+        item.amount = -item.amount;
+      }
+    });
     const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
     for (let i = 1; i < newList.length; i++) {
       const current = newList[i];
@@ -61,6 +69,8 @@ export default class Statistics extends Vue {
     }
     result.map(group => {
       group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      group.income = group.items.filter(item => item.type === '+').reduce((sum, item) => sum + item.amount, 0);
+      group.pay = -(group.items.filter(item => item.type === '-').reduce((sum, item) => sum + item.amount, 0));
     });
     return result;
   }
@@ -96,15 +106,38 @@ export default class Statistics extends Vue {
   align-content: center;
 }
 
+.block {
+  margin: 10px 15px;
+
+  .el-input__suffix {
+    display: none;
+  }
+
+  .el-date-editor.el-input.el-input--prefix.el-input--suffix {
+    width: 130px;
+  }
+}
+
 .title {
   @extend %item;
   background-color: white;
+  font-size: 12px;
+  color: #999;
+  border-bottom: 1px solid rgba(175, 173, 173, 0.3);
+
+  .timeNow {
+    flex-grow: 1;
+  }
+
+  .income {
+    display: inline-block;
+    margin-right: 15px;
+  }
 }
 
 .record {
   @extend %item;
 }
-
 
 .iconTags {
   display: flex;
@@ -129,10 +162,10 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 5px;
   color: #999;
-  max-width: 120px;
-  overflow: hidden;
+  max-width: 50%;
+  overflow: auto;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  align-self: center;
 }
 
 .moneyCount {

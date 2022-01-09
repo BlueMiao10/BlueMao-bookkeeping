@@ -6,6 +6,7 @@ import Statistics from '@/views/Statistics.vue';
 import NotFound from '@/views/NotFound.vue';
 import EditLabel from '@/views/addLabel.vue';
 import FrontPage from '@/views/FrontPage.vue';
+import charts from '@/views/charts.vue';
 // import FrontPage from '@/views/FrontPage.vue';
 
 Vue.use(VueRouter);
@@ -34,6 +35,11 @@ const routes: Array<RouteConfig> = [
   {
     path: '/statistics',
     component: Statistics
+  },
+  //图标
+  {
+    path: '/charts',
+    component: charts
   },
   {
     path: '/labels/edit',
