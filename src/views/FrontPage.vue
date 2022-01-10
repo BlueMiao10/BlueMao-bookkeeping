@@ -53,7 +53,7 @@ export default class FrontPage extends Vue {
     width: 100%;
     height: 20vh;
     overflow: hidden;
-    background: url("../assets/background.png") no-repeat center center;
+    background: url("../assets/background2.png") no-repeat center center;
     background-size: cover;
     opacity: 0.9;
     text-align: center;

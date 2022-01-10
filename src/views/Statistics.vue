@@ -2,7 +2,11 @@
   <Layout>
     <el-empty :image-size="200" v-if="groupList.length === 0"></el-empty>
     <ol v-else>
-      <li v-for="(group,index) in groupList" :key="index">
+      <li class="background">
+        <span class="dayKeeping" @click="selectOne">日常账本</span>
+        <span class="dayKeeping selected" @click="selectTwo">本月总计：{{total }}元</span>
+      </li>
+      <li v-for="(group,index) in groupList" :key="index" class="group">
         <h3 class="title">
           <span class="timeNow">{{ beautify(group.title) }}</span>
           <span class="income">收入：{{ group.income }}元</span>
@@ -37,10 +41,10 @@ import clone from '@/lib/clone';
   components: {Tabs},
 })
 export default class Statistics extends Vue {
-  value = '';
   type = '-';
   interval = 'day';
   recordTypeList = recordTypeList;
+  total = 0;
 
   get recordList() {
     return this.$store.state.recordList;
@@ -69,6 +73,9 @@ export default class Statistics extends Vue {
     }
     result.map(group => {
       group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+      if (dayjs(group.title).month() === dayjs(Date.now()).month()) {
+        this.total += group.total;
+      }
       group.income = group.items.filter(item => item.type === '+').reduce((sum, item) => sum + item.amount, 0);
       group.pay = -(group.items.filter(item => item.type === '-').reduce((sum, item) => sum + item.amount, 0));
     });
@@ -91,6 +98,18 @@ export default class Statistics extends Vue {
     }
   }
 
+  selectOne() {
+    const b = document.querySelectorAll('.dayKeeping');
+    b[1].classList.remove('selected');
+    b[0].classList.add('selected');
+  }
+
+  selectTwo() {
+    const b = document.querySelectorAll('.dayKeeping');
+    b[0].classList.remove('selected');
+    b[1].classList.add('selected');
+  }
+
   created() {
     this.$store.commit('fetchRecords');
   }
@@ -106,15 +125,27 @@ export default class Statistics extends Vue {
   align-content: center;
 }
 
-.block {
-  margin: 10px 15px;
+.background {
+  width: 100%;
+  height: 15vh;
+  overflow: hidden;
+  background: url("../assets/background1.png") no-repeat center center;
+  background-size: cover;
+  opacity: 0.9;
+  text-align: center;
+  padding-top: 25px;
 
-  .el-input__suffix {
-    display: none;
+  .dayKeeping {
+    color: rgba(245, 241, 241, 0.8);
+    display: inline-block;
+    padding: 2px 10px;
+    box-shadow: 0 0 1px 1px rgba(224, 216, 216, 0.6);
+    border-radius: 20px;
+    background-color: rgba(116, 111, 111, 0.5);
   }
 
-  .el-date-editor.el-input.el-input--prefix.el-input--suffix {
-    width: 130px;
+  .dayKeeping.selected {
+    display: none;
   }
 }
 
