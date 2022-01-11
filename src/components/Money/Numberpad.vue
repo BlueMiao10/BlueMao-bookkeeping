@@ -70,7 +70,6 @@ export default class NumberPad extends Vue {
     this.output = '0';
     EventBus.$emit('output', parseInt(this.output));
   }
-
 }
 </script>
 

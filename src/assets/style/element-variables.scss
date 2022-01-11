@@ -1,7 +1,17 @@
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
-.el-message-box__wrapper .el-message-box{
+.el-message-box__wrapper .el-message-box {
   width: 80vw;
 }
 
+.el-progress__text {
+  padding: 0;
+  width: 75vw;
+  margin: -5px;
+  display: none;
+}
+
+.el-progress-bar{
+  width:75vw;
+}

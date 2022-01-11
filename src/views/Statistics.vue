@@ -1,11 +1,11 @@
 <template>
   <Layout>
+    <div class="background">
+      <span class="dayKeeping" @click="selectOne">日常账本</span>
+      <span class="dayKeeping selected" @click="selectTwo">本月总计：{{ total }}元</span>
+    </div>
     <el-empty :image-size="200" v-if="groupList.length === 0"></el-empty>
     <ol v-else>
-      <li class="background">
-        <span class="dayKeeping" @click="selectOne">日常账本</span>
-        <span class="dayKeeping selected" @click="selectTwo">本月总计：{{total }}元</span>
-      </li>
       <li v-for="(group,index) in groupList" :key="index" class="group">
         <h3 class="title">
           <span class="timeNow">{{ beautify(group.title) }}</span>

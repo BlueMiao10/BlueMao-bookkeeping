@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
-    <Notes @update:value="onUpdateNotes"/>
+    <Notes @update:value="onUpdateNotes" :date.sync="record.createdAt"/>
     <MoneyTags @update:value="onUpdateTags"/>
     <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
   </Layout>
@@ -15,13 +15,14 @@ import {Component} from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList';
 import Tabs from '@/components/Tabs.vue';
 import MoneyTags from '@/components/Money/MoneyTags.vue';
+import dayjs from 'dayjs';
 
 @Component({
   components: {MoneyTags, Notes, NumberPad, Tabs}
 })
 
 export default class Money extends Vue {
-  record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
+  record: RecordItem = {tags: [], notes: '', type: '-', amount: 0, createdAt: dayjs(new Date().toISOString()).format('YYYY-MM-DD')};
   recordTypeList = recordTypeList;
 
   created() {

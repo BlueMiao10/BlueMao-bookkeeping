@@ -2,19 +2,21 @@
   <div class="notes">
     <Icon name="note"/>
     <input type="text" placeholder="写点备注~" v-model="value">
-    <div class="time">{{ now }}<br>今天</div>
+    <div class="time">
+      <input class="dateTime" type="date" :value="date"
+             @input="$emit('update:date',$event.target.value)">
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
-import dayjs from 'dayjs';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Notes extends Vue {
   value = '';
-  now = dayjs(new Date().toISOString()).format('YYYY-MM-DD');
+  @Prop(String) date?: string;
 
   @Watch('value')
   onValueChanged(value: string) {
@@ -31,7 +33,7 @@ export default class Notes extends Vue {
   align-items: center;
 
   input {
-    padding: 16px 0;
+    padding: 12px 0;
     background-color: transparent;
     border: none;
     outline: 0;
@@ -45,10 +47,11 @@ export default class Notes extends Vue {
     margin-right: 5px;
   }
 
-  .time {
-    padding-right: 16px;
-    text-align: center;
-    margin-left: 10px;
+  input {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 124px;
+    margin-right: 5px;
   }
 }
 </style>
