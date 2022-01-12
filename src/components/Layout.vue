@@ -28,4 +28,5 @@ export default {
   overflow-y: auto;
   flex-grow: 1;
 }
+
 </style>

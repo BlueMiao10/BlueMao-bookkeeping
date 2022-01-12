@@ -47,13 +47,21 @@ export default class EditLabel extends Vue {
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
     if (name) {
+      if (name.length > 5) {
+        this.$message({
+          message: '最多输入五个字符哦',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
       if (this.selectedTags.length > 0) {
         this.$store.commit('createTags', {name: name, icon: this.selectedTags[0]});
       } else {
         this.$message({
           message: '请选择图标',
           type: 'warning',
-          duration:1000
+          duration: 1000
         });
         return;
       }
@@ -61,7 +69,7 @@ export default class EditLabel extends Vue {
       this.$message({
         message: '请填写标签',
         type: 'warning',
-        duration:1000
+        duration: 1000
       });
       return;
     }

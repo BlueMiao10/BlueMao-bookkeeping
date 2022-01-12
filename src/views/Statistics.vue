@@ -5,7 +5,7 @@
       <span class="dayKeeping selected" @click="selectTwo">本月总计：{{ total }}元</span>
     </div>
     <el-empty :image-size="200" v-if="groupList.length === 0"></el-empty>
-    <ol v-else>
+    <ol v-else class="statisticsItem">
       <li v-for="(group,index) in groupList" :key="index" class="group">
         <h3 class="title">
           <span class="timeNow">{{ beautify(group.title) }}</span>
@@ -19,7 +19,7 @@
               <span>{{ item.tags[0].name }}</span>
             </div>
             <div class="notes">
-              <span class="notes" :style="{marginRight:'auto'}">{{ item.notes }}</span>
+              <span :style="{marginRight:'auto'}">{{ item.notes }}</span>
             </div>
             <span class="moneyCount">{{ item.amount }}</span>
           </li>
@@ -149,64 +149,66 @@ export default class Statistics extends Vue {
   }
 }
 
-.title {
-  @extend %item;
-  background-color: white;
-  font-size: 12px;
-  color: #999;
-  border-bottom: 1px solid rgba(175, 173, 173, 0.3);
+.statisticsItem {
+  height: 75vh;
+  overflow-y: auto;
+}
 
-  .timeNow {
-    flex-grow: 1;
+.group {
+  .title {
+    @extend %item;
+    background-color: white;
+    font-size: 12px;
+    color: #999;
+    border-bottom: 1px solid rgba(175, 173, 173, 0.3);
+
+    .timeNow {
+      flex-grow: 1;
+    }
+
+    .income {
+      display: inline-block;
+      margin-right: 15px;
+    }
   }
 
-  .income {
-    display: inline-block;
-    margin-right: 15px;
-  }
-}
+  .record {
+    @extend %item;
 
-.record {
-  @extend %item;
-}
+    .iconTags {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
 
-.iconTags {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+      .icon {
+        align-self: center;
+        min-width: 28px;
+        min-height: 28px;
+      }
 
-  .icon {
-    align-self: center;
-    min-width: 28px;
-    min-height: 28px;
-  }
+      span {
+        display: inline-block;
+        min-width: 50px;
+        padding-left: 8px;
+      }
+    }
 
-  span {
-    display: inline-block;
-    min-width: 50px;
-    padding-left: 8px;
-  }
-}
+    .notes {
+      margin-right: auto;
+      margin-left: 5px;
+      color: #999;
+      max-width: 50%;
+      overflow: auto;
+      white-space: nowrap;
+      align-self: center;
+      font-size: 12px;
+    }
 
-.notes {
-  margin-right: auto;
-  margin-left: 5px;
-  color: #999;
-  max-width: 50%;
-  overflow: auto;
-  white-space: nowrap;
-  align-self: center;
-}
-
-.moneyCount {
-  display: inline-block;
-  align-self: center;
-}
-
-::v-deep .type--tabs-item {
-  &.selected {
-    background-color: #B2D5F5;
+    .moneyCount {
+      display: inline-block;
+      align-self: center;
+    }
   }
 }
 </style>

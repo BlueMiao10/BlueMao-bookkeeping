@@ -10,14 +10,16 @@
         <div class="iconTags">
           <Icon :name="rank.icon"/>
           <div class="percent">
-            <div>
-              <span>{{ rank.name }}</span>
-              <span>{{ ((rank.amountTotal / siTotal) * 100).toFixed(1) }}%</span>
+            <div class="rankAmount">
+              <div>
+                <span>{{ rank.name }}</span>
+                <span>{{ ((rank.amountTotal / siTotal) * 100).toFixed(1) }}%</span>
+              </div>
+              <span class="moneyCount">{{ rank.amountTotal.toFixed(2) }}</span>
             </div>
             <el-progress :percentage="((rank.amountTotal / siTotal).toFixed(1)) * 100"></el-progress>
           </div>
         </div>
-        <span class="moneyCount">{{ rank.amountTotal }}</span>
       </li>
     </ol>
     <el-empty :image-size="200" v-else></el-empty>
@@ -198,31 +200,40 @@ export default class charts extends Vue {
   }
 }
 
-.record {
-  @extend %item;
-}
+.group {
+  height: 45vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .record {
+    @extend %item;
 
-.iconTags {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    .iconTags {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-  .icon {
-    align-self: center;
-    min-width: 32px;
-    min-height: 32px;
-  }
+      .icon {
+        align-self: center;
+        min-width: 32px;
+        min-height: 32px;
+      }
 
-  span {
-    display: inline-block;
-    min-width: 50px;
-    padding-left: 8px;
-  }
+      .percent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
-  .percent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+        .rankAmount {
+          display: flex;
+          justify-content: space-between;
+
+          span {
+            display: inline-block;
+            margin-left: 8px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -237,6 +248,5 @@ export default class charts extends Vue {
   &.selected {
     background-color: #B2D5F5;
   }
-
 }
 </style>

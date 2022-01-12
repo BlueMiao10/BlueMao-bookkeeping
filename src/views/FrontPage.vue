@@ -59,42 +59,47 @@ export default class FrontPage extends Vue {
     text-align: center;
     padding-top: 25px;
   }
-}
 
-.bookKeeping {
-  float: left;
-  position: relative;
-  left: 50%;
-  border-radius: 50%;
-  margin-top: -6vh;
-  transform: translateX(-50%);
-  background-color: white;
-
-  .icon {
+  .bookKeeping {
     float: left;
     position: relative;
-    width: 80px;
-    height: 80px;
-    margin: 8px;
-    transition: all .3s;
+    left: 50%;
+    border-radius: 50%;
+    margin-top: -6vh;
+    transform: translateX(-50%);
+    background-color: white;
 
-    &.selected {
-      transform: rotate(-90deg);
+    .icon {
+      float: left;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 8px;
+      transition: all .3s;
+
+      &.selected {
+        transform: rotate(-90deg);
+      }
     }
+  }
+
+  .container {
+    @extend %clearfix;
+    height: 62vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .tip {
+    margin-top: 10vh;
+    color: #e6e6e6;
+    font-size: 24px;
   }
 }
 
-.container {
-  @extend %clearfix;
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
-.tip {
-  margin-top: 10vh;
-  color: #e6e6e6;
-  font-size: 24px;
-}
 </style>

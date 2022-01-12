@@ -22,7 +22,13 @@ import dayjs from 'dayjs';
 })
 
 export default class Money extends Vue {
-  record: RecordItem = {tags: [], notes: '', type: '-', amount: 0, createdAt: dayjs(new Date().toISOString()).format('YYYY-MM-DD')};
+  record: RecordItem = {
+    tags: [],
+    notes: '',
+    type: '-',
+    amount: 0,
+    createdAt: dayjs(new Date().toISOString()).format('YYYY-MM-DD')
+  };
   recordTypeList = recordTypeList;
 
   created() {
@@ -68,6 +74,7 @@ export default class Money extends Vue {
       return;
     });
   }
+
 
   saveRecord() {
     if (this.record.amount === 0) {
