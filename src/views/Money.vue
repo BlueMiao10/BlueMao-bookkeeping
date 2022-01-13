@@ -63,5 +63,6 @@ export default class Money extends Vue {
 .layout-content {
   display: flex;
   flex-direction: column-reverse;
+  overflow-y: auto;
 }
 </style>

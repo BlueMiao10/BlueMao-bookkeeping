@@ -92,6 +92,8 @@ export default class Tags extends Vue {
 .labelTags2 {
   font-size: 16px;
   padding: 0 3px;
+  height: 76vh;
+  overflow-y: auto;
 
   li {
     min-height: 44px;

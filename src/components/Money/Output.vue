@@ -1,8 +1,6 @@
 <template>
-  <div class="outputNumber">
-    <div class="output">
-      {{ display }}
-    </div>
+  <div class="output">
+    {{ display }}
   </div>
 </template>
 
@@ -44,7 +42,7 @@ export default {
   font-size: 16px;
   margin-left: 10px;
 
-  > ::v-deep .icon {
+  ::v-deep .icon {
     width: 30px;
     height: 30px;
     margin: 0 5px;

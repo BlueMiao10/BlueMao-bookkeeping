@@ -26,11 +26,14 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import store from '@/store';
+import tagIncomeList from '@/constants/tagIncomeList';
+import tagPayList from '@/constants/tagPayList';
 
 @Component
 export default class EditLabel extends Vue {
   tags = store.state.labels;
   selected: string[] = [];
+  tagList = store.state.tagList;
 
   created() {
     this.$store.commit('fetchTags');
@@ -46,7 +49,19 @@ export default class EditLabel extends Vue {
 
   sure() {
     const name = document.getElementsByTagName('input')[0].value;
+    const tagIncomeName = tagIncomeList.map(item => item.name);
+    const tagPayName = tagPayList.map(item => item.name);
+    const tagNewName1 = this.tagList[0].map(item => item.name);
+    const tagNewName2 = this.tagList[1].map(item => item.name);
     if (name) {
+      if (tagIncomeName.indexOf(name) >= 0 || tagPayName.indexOf(name) >= 0 || tagNewName1.indexOf(name) >= 0 || tagNewName2.indexOf(name) >= 0) {
+        this.$message({
+          message: '标签名重复',
+          type: 'warning',
+          duration: 1000
+        });
+        return;
+      }
       if (name.length > 5) {
         this.$message({
           message: '最多输入五个字符哦',
