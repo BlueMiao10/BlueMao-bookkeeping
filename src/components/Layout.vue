@@ -25,7 +25,7 @@ export default {
 .content {
   /*查出部分，只有内容区域会滚动*/
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   flex-grow: 1;
 }
 

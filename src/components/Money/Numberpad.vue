@@ -68,6 +68,7 @@ export default class NumberPad extends Vue {
     this.$emit('submit', parseInt(this.output));
     this.output = '0';
     EventBus.$emit('output', parseInt(this.output));
+    this.$router.replace('/frontPage')
   }
 }
 </script>

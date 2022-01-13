@@ -35,7 +35,7 @@ import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
 import clone from '@/lib/clone';
 import dayjs from 'dayjs';
-import Chart from '@/views/chart.vue';
+import Chart from '@/components/Charts/chart.vue';
 
 @Component({components: {Chart, Tabs}})
 export default class charts extends Vue {

@@ -2,7 +2,7 @@
   <ol :data-source="recordTypeList" class="xxx">
     <li v-for="(group,index) in groupList" :key="index">
       <div class="title"> ￥{{ group.total }}</div>
-      <div v-for="item in group.items" :key="item.id" class="record" :class="{selected:item.type==='+'}">
+      <div v-for="item in group.items.reverse()" :key="item.id" class="record" :class="{selected:item.type==='+'}">
         <div class="iconTags">
           <Icon :name="item.tags[0].icon"/>
           <span>{{ item.tags[0].name }}</span>
